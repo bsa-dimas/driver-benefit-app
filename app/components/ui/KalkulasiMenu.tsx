@@ -1,5 +1,6 @@
 import React from "react";
 import { Periode } from "../models/periode_model";
+import { Button, Select } from "flowbite-react";
 
 export default function KalkulasiMenu({
   onChangePeriode,
@@ -8,12 +9,8 @@ export default function KalkulasiMenu({
   postDraftData,
 }: any) {
   return (
-    <div className="flex gap-2 border p-2">
-      <select
-        className="select select-bordered select-sm"
-        defaultValue={""}
-        onChange={onChangePeriode}
-      >
+    <div className="flex gap-2">
+      <Select sizing="sm" id="countries" required onChange={onChangePeriode}>
         <option value={""} disabled>
           Plih periode
         </option>
@@ -25,19 +22,14 @@ export default function KalkulasiMenu({
               </option>
             );
           })}
-      </select>
-      <button
-        className="btn btn-sm btn-outline btn-primary"
-        onClick={postDataToTransaksi}
-      >
+      </Select>
+
+      <Button size="xs" color="light" onClick={postDataToTransaksi}>
         Kalkulasi Perhitungan
-      </button>
-      <button
-        className="btn btn-sm btn-outline btn-success"
-        onClick={postDraftData}
-      >
+      </Button>
+      <Button size="xs" color="light" onClick={postDraftData}>
         Posting Draft Data
-      </button>
+      </Button>
     </div>
   );
 }

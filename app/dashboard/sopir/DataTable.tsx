@@ -36,18 +36,21 @@ import {
   compareItems,
 } from "@tanstack/match-sorter-utils";
 import { columns } from "./table/columns";
-import { User } from "@/app/components/models/user_model";
-import useUser from "@/app/components/repository/useUser";
+import { Sopir } from "@/app/components/models/sopir_model";
 import DebouncedInput from "@/app/components/ui/DebuncedInput";
 import MenuItem from "@/app/components/ui/MenuItem";
 import NotificationBottom from "@/app/components/ui/NotificationBottom";
 import SearchBar from "@/app/components/ui/SearchBar";
 import BottomTable from "@/app/components/ui/BottomTable";
-import CoreDataTable from "@/app/components/ui/CoreDataTable";
+import CoreDataTable, {
+  VisibilityState,
+} from "@/app/components/ui/CoreDataTable";
 import SkeletonCoreTable from "@/app/components/ui/SkeletonCoreTable";
 import StandartMenu from "@/app/components/ui/StandartMenu";
 import CreateForm from "@/app/components/lib/CreateForm";
 import ModalDelete from "@/app/components/ui/ModalDelete";
+import useSopir from "@/app/components/repository/useSopir";
+import { FaLaptopHouse } from "react-icons/fa";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -104,10 +107,10 @@ export default function DataTable() {
     addRow,
     updateRow,
     deleteRow,
-  } = useUser();
+  } = useSopir();
 
   const [rowSelection, setRowSelection] = React.useState({});
-  const [data, setData] = useState<User[]>([]);
+  const [data, setData] = useState<Sopir[]>([]);
   const [editedRows, setEditedRows] = React.useState({});
   const [validRows, setValidRows] = useState({});
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -118,7 +121,7 @@ export default function DataTable() {
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [notification, setNotification] = useState<any>();
   const [ntCrud, setNtCrud] = useState<any>();
-  const [table, setTable] = useState<Table<User>>();
+  const [table, setTable] = useState<Table<Sopir>>();
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [rowIdForDelete, setRowIdForDelete] = useState<any>(null);
@@ -133,6 +136,20 @@ export default function DataTable() {
       setNtCrud(null);
     }, 5000);
   };
+
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
+  useEffect(() => {
+    setColumnVisibility({
+      alamat: false,
+      no_telepon: false,
+      no_hp: false,
+      no_ktp: false,
+      no_sim: false,
+      no_rekening: false,
+      cabang_bank: false,
+    });
+  }, []);
 
   const initTable = useReactTable({
     data,
@@ -194,7 +211,9 @@ export default function DataTable() {
       sorting,
       globalFilter,
       rowSelection,
+      columnVisibility,
     },
+    onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
@@ -210,11 +229,24 @@ export default function DataTable() {
   const submitForm = async (event: any) => {
     event.preventDefault();
 
-    const newData: User = {
+    const newData: Sopir = {
       id: "",
-      name: event.target.name.value,
+      nama: event.target.nama.value,
+      tgl_gabung: event.target.tgl_gabung.value,
+      tgl_keluar: event.target.tgl_keluar.value,
+      bank: event.target.bank.value,
+      no_rekening: event.target.no_rekening.value,
+      cabang_bank: event.target.cabang_bank.value,
+      alamat: event.target.alamat.value,
+      no_hp: event.target.no_hp.value,
+      no_ktp: event.target.no_ktp.value,
+      no_sim: event.target.no_sim.value,
+      no_telepon: event.target.no_telepon.value,
+      dept_id: event.target.dept_id.value,
+      nik: event.target.nik.value,
       email: event.target.email.value,
-      role_id: event.target.role_id.value,
+      no_npwp: event.target.no_npwp.value,
+      status_ptkp: event.target.status_ptkp.value,
     };
     addRow(newData)
       .then((data) => handleNotif(data))
@@ -277,19 +309,84 @@ export default function DataTable() {
         <CreateForm
           fields={[
             {
-              name: "name",
+              name: "nama",
               type: "text",
               required: true,
             },
             {
-              name: "email",
-              type: "email",
+              name: "tgl_gabung",
+              type: "text",
               required: true,
             },
             {
-              name: "role_id",
-              type: "number",
+              name: "tgl_keluar",
+              type: "text",
+              required: false,
+            },
+            {
+              name: "bank",
+              type: "text",
               required: true,
+            },
+            {
+              name: "no_rekening",
+              type: "text",
+              required: true,
+            },
+            {
+              name: "cabang_bank",
+              type: "text",
+              required: true,
+            },
+            {
+              name: "alamat",
+              type: "text",
+              required: true,
+            },
+            {
+              name: "no_hp",
+              type: "text",
+              required: false,
+            },
+            {
+              name: "no_ktp",
+              type: "text",
+              required: true,
+            },
+            {
+              name: "no_sim",
+              type: "text",
+              required: true,
+            },
+            {
+              name: "no_telepon",
+              type: "text",
+              required: false,
+            },
+            {
+              name: "dept_id",
+              type: "number",
+              required: false,
+            },
+            {
+              name: "nik",
+              type: "text",
+              required: false,
+            },
+            {
+              name: "email",
+              type: "email",
+              required: false,
+            },
+            {
+              name: "no_npwp",
+              type: "text",
+              required: false,
+            },
+            {
+              name: "status_ptkp",
+              type: "text",
+              required: false,
             },
           ]}
           onSubmit={submitForm}

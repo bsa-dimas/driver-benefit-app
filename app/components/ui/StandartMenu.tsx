@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBar from "./SearchBar";
-import { Button } from "flowbite-react";
+import { Button, Checkbox, Dropdown, Label } from "flowbite-react";
 
 export default function StandartMenu({
   table,
@@ -37,6 +37,44 @@ export default function StandartMenu({
             Remove
           </Button>
         )}
+        <div className="flex">
+          <Dropdown
+            className="h-1/2 overflow-auto items-center flex"
+            size="xs"
+            color="light"
+            label="Column"
+            dismissOnClick={false}
+          >
+            <Dropdown.Header>
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="header"
+                  {...{
+                    checked: table.getIsAllColumnsVisible(),
+                    onChange: table.getToggleAllColumnsVisibilityHandler(),
+                  }}
+                />
+                <Label htmlFor="header">All</Label>
+              </div>
+            </Dropdown.Header>
+            {table.getAllLeafColumns().map((column: any, i: number) => {
+              return (
+                <Dropdown.Item key={column.id}>
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      id={column.id}
+                      {...{
+                        checked: column.getIsVisible(),
+                        onChange: column.getToggleVisibilityHandler(),
+                      }}
+                    />
+                    <Label htmlFor={column.id}>{column.id}</Label>
+                  </div>
+                </Dropdown.Item>
+              );
+            })}
+          </Dropdown>
+        </div>
       </div>
       <SearchBar value={initialValue} onChange={onChange} />
     </div>

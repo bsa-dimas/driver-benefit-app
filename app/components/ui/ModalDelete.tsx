@@ -4,7 +4,7 @@ import { Button, Modal } from "flowbite-react";
 import { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
-export default function ModalDelete({ submitForm, isOpen, closeModal }: any) {
+export default function ModalDelete({ onSubmit, isOpen, closeModal }: any) {
   return (
     <>
       <Modal show={isOpen} size="md" onClose={() => closeModal(false)} popup>
@@ -16,7 +16,7 @@ export default function ModalDelete({ submitForm, isOpen, closeModal }: any) {
               Are you sure you want to delete this data?
             </h3>
             <div className="flex justify-center gap-4">
-              <Button color="failure" onClick={submitForm}>
+              <Button color="failure" onClick={onSubmit}>
                 {"Yes, I'm sure"}
               </Button>
               <Button color="gray" onClick={() => closeModal(false)}>

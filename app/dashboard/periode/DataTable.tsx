@@ -36,8 +36,8 @@ import {
   compareItems,
 } from "@tanstack/match-sorter-utils";
 import { columns } from "./table/columns";
-import { User } from "@/app/components/models/user_model";
-import useUser from "@/app/components/repository/useUser";
+import { Periode } from "@/app/components/models/periode_model";
+import usePeriode from "@/app/components/repository/usePeriode";
 import DebouncedInput from "@/app/components/ui/DebuncedInput";
 import MenuItem from "@/app/components/ui/MenuItem";
 import NotificationBottom from "@/app/components/ui/NotificationBottom";
@@ -104,10 +104,10 @@ export default function DataTable() {
     addRow,
     updateRow,
     deleteRow,
-  } = useUser();
+  } = usePeriode();
 
   const [rowSelection, setRowSelection] = React.useState({});
-  const [data, setData] = useState<User[]>([]);
+  const [data, setData] = useState<Periode[]>([]);
   const [editedRows, setEditedRows] = React.useState({});
   const [validRows, setValidRows] = useState({});
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -118,7 +118,7 @@ export default function DataTable() {
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [notification, setNotification] = useState<any>();
   const [ntCrud, setNtCrud] = useState<any>();
-  const [table, setTable] = useState<Table<User>>();
+  const [table, setTable] = useState<Table<Periode>>();
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [rowIdForDelete, setRowIdForDelete] = useState<any>(null);
@@ -210,11 +210,12 @@ export default function DataTable() {
   const submitForm = async (event: any) => {
     event.preventDefault();
 
-    const newData: User = {
+    const newData: Periode = {
       id: "",
-      name: event.target.name.value,
-      email: event.target.email.value,
-      role_id: event.target.role_id.value,
+      nama_periode: event.target.nama_periode.value,
+      dari_tanggal: event.target.dari_tanggal.value,
+      sampai_tanggal: event.target.sampai_tanggal.value,
+      lock: false,
     };
     addRow(newData)
       .then((data) => handleNotif(data))
@@ -277,18 +278,18 @@ export default function DataTable() {
         <CreateForm
           fields={[
             {
-              name: "name",
+              name: "nama_periode",
               type: "text",
               required: true,
             },
             {
-              name: "email",
-              type: "email",
+              name: "dari_tanggal",
+              type: "date",
               required: true,
             },
             {
-              name: "role_id",
-              type: "number",
+              name: "sampai_tanggal",
+              type: "date",
               required: true,
             },
           ]}
