@@ -36,8 +36,8 @@ import {
   compareItems,
 } from "@tanstack/match-sorter-utils";
 import { columns } from "./table/columns";
-import { DrafTransaksi } from "@/app/components/models/draft_transaksi_model";
-import useDrafTransaksi from "@/app/components/repository/useDraft";
+import { Payrol } from "@/app/components/models/payrol_model";
+import usePayrol from "@/app/components/repository/usePayrol";
 import DebouncedInput from "@/app/components/ui/DebuncedInput";
 import MenuItem from "@/app/components/ui/MenuItem";
 import NotificationBottom from "@/app/components/ui/NotificationBottom";
@@ -48,9 +48,6 @@ import SkeletonCoreTable from "@/app/components/ui/SkeletonCoreTable";
 import StandartMenu from "@/app/components/ui/StandartMenu";
 import CreateForm from "@/app/components/lib/CreateForm";
 import ModalDelete from "@/app/components/ui/ModalDelete";
-import KalkulasiMenu from "@/app/components/ui/KalkulasiMenu";
-import ReportDraftMenu from "@/app/components/ui/ReportDraftMenu";
-import usePeriode from "@/app/components/repository/usePeriode";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -107,15 +104,10 @@ export default function DataTable() {
     addRow,
     updateRow,
     deleteRow,
-    addImportData,
-    postData,
-    postingDraftData,
-  } = useDrafTransaksi();
-
-  const { dataDraftTransaksi: dataPeriode } = usePeriode();
+  } = usePayrol();
 
   const [rowSelection, setRowSelection] = React.useState({});
-  const [data, setData] = useState<DrafTransaksi[]>([]);
+  const [data, setData] = useState<Payrol[]>([]);
   const [editedRows, setEditedRows] = React.useState({});
   const [validRows, setValidRows] = useState({});
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -126,13 +118,10 @@ export default function DataTable() {
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [notification, setNotification] = useState<any>();
   const [ntCrud, setNtCrud] = useState<any>();
-  const [table, setTable] = useState<Table<DrafTransaksi>>();
+  const [table, setTable] = useState<Table<Payrol>>();
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [rowIdForDelete, setRowIdForDelete] = useState<any>(null);
-  const [periode, setPeriode] = useState<string>("");
-  const [loader, setLoader] = useState(false);
-
   const handleNotif = (data: any) => {
     setNtCrud({
       title: data.message.includes("Error") ? "Error" : "Message",
@@ -221,16 +210,16 @@ export default function DataTable() {
   const submitForm = async (event: any) => {
     event.preventDefault();
 
-    const newData: DrafTransaksi = {
-      id: "",
-      nik: event.target.nik.value,
-      tgl_transaksi: event.target.tgl_transaksi.value,
-      kode_transaksi: event.target.kode_transaksi.value,
-      amount: event.target.amount.value,
-    };
-    addRow(newData)
-      .then((data) => handleNotif(data))
-      .finally(() => setModal(false));
+    // const newData: Payrol = {
+    //   id: "",
+    //   nama_Payrol: event.target.nama_Payrol.value,
+    //   dari_tanggal: event.target.dari_tanggal.value,
+    //   sampai_tanggal: event.target.sampai_tanggal.value,
+    //   lock: false,
+    // };
+    // addRow(newData)
+    //   .then((data) => handleNotif(data))
+    //   .finally(() => setModal(false));
   };
 
   const submitFormDelete = async (id: number) => {
@@ -248,20 +237,6 @@ export default function DataTable() {
 
   const closeModalDelete = () => {
     setModalDelete(false);
-  };
-
-  const postDataToTransaksi = async () => {
-    setLoader(true);
-    postData(periode)
-      .then((data) => handleNotif(data))
-      .finally(() => setLoader(false));
-  };
-
-  const postDraftData = async () => {
-    setLoader(true);
-    postingDraftData(periode)
-      .then((data) => handleNotif(data))
-      .finally(() => setLoader(false));
   };
 
   useEffect(() => {
@@ -303,23 +278,18 @@ export default function DataTable() {
         <CreateForm
           fields={[
             {
-              name: "nik",
+              name: "nama_Payrol",
               type: "text",
               required: true,
             },
             {
-              name: "tgl_transaksi",
+              name: "dari_tanggal",
               type: "date",
               required: true,
             },
             {
-              name: "kode_transaksi",
-              type: "text",
-              required: true,
-            },
-            {
-              name: "amount",
-              type: "number",
+              name: "sampai_tanggal",
+              type: "date",
               required: true,
             },
           ]}
@@ -328,25 +298,13 @@ export default function DataTable() {
           closeModal={closeModal}
         />
 
-        <div className="flex flex-col mx-2 gap-2"></div>
-
         <div className="flex flex-col overflow-x-auto gap-2">
-          <ReportDraftMenu />
-          <KalkulasiMenu
-            onChangePeriode={(e: any) => setPeriode(e.target.value)}
-            dataPeriode={dataPeriode}
-            postDataToTransaksi={postDataToTransaksi}
-            postDraftData={postDraftData}
-          />
-
           <StandartMenu
-            onClickAdd={() => {
-              setModal(true);
-            }}
+            onClickAdd={null}
             table={table}
             searchValue={globalFilter ?? ""}
             onChange={(value) => setGlobalFilter(String(value))}
-            isFiturCrud={true}
+            isFiturCrud={false}
           />
           <CoreDataTable table={table} />
           <BottomTable table={table} />

@@ -9,6 +9,7 @@ import {
 import DropDownUserNavbar from "../components/ui/DropDownUserNavbar";
 import Link from "next/link";
 import FlowBiteScript from "./FlowBiteScript";
+import { GrTransaction } from "react-icons/gr";
 
 export default function RootLayout({
   children,
@@ -27,7 +28,7 @@ export default function RootLayout({
                   data-drawer-toggle="logo-sidebar"
                   aria-controls="logo-sidebar"
                   type="button"
-                  className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                  className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                 >
                   <span className="sr-only">Open sidebar</span>
                   <svg
@@ -43,7 +44,7 @@ export default function RootLayout({
                     ></path>
                   </svg>
                 </button>
-                <a href="https://flowbite.com" className="flex ms-2 md:me-24">
+                <a href="#" className="flex ms-2 md:me-24">
                   <img
                     src="https://flowbite.com/docs/images/logo.svg"
                     className="h-8 me-3"
@@ -66,7 +67,8 @@ export default function RootLayout({
 
         <aside
           id="logo-sidebar"
-          className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+          className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+          // className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 lg:translate-x-0 xl:translate-x-0 2xl:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
           aria-label="Sidebar"
           aria-hidden="true"
         >
@@ -103,14 +105,20 @@ export default function RootLayout({
                   data-collapse-toggle="dropdown-example"
                 >
                   <svg
-                    className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 18 21"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
                   >
-                    <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
+                    />
                   </svg>
+
                   <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
                     Master
                   </span>
@@ -180,15 +188,7 @@ export default function RootLayout({
                   aria-controls="dropdown-example2"
                   data-collapse-toggle="dropdown-example2"
                 >
-                  <svg
-                    className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 18 21"
-                  >
-                    <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
-                  </svg>
+                  <GrTransaction />
                   <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
                     Transaksi
                   </span>
@@ -231,7 +231,7 @@ export default function RootLayout({
           </div>
         </aside>
 
-        <div className="sm:ml-64 bg-white dark:bg-gray-900 h-full min-h-screen flex flex-col">
+        <div className=" bg-white dark:bg-gray-900 h-full min-h-screen flex flex-col">
           <div className="flex-1 p-2 bg-white dark:bg-gray-900 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
             {children}
           </div>

@@ -3,11 +3,13 @@ import SearchBar from "./SearchBar";
 import { Button, Checkbox, Dropdown, Label } from "flowbite-react";
 
 export default function StandartMenu({
+  isFiturCrud,
   table,
   onClickAdd,
   searchValue: initialValue,
   onChange,
 }: {
+  isFiturCrud: boolean;
   table: any;
   onClickAdd: any;
   searchValue: string | number;
@@ -25,17 +27,25 @@ export default function StandartMenu({
   return (
     <div className="flex justify-between">
       <div className="flex gap-2">
-        <Button size="xs" color="light" onClick={onClickAdd}>
-          Add
-        </Button>
-        {selectedRows.length > 0 ? (
-          <Button size="xs" color="light">
-            Remove
+        {isFiturCrud ? (
+          <Button size="xs" color="light" onClick={onClickAdd}>
+            Add
           </Button>
         ) : (
-          <Button size="xs" color="light" disabled>
-            Remove
-          </Button>
+          <></>
+        )}
+        {isFiturCrud ? (
+          selectedRows.length > 0 ? (
+            <Button size="xs" color="light">
+              Remove
+            </Button>
+          ) : (
+            <Button size="xs" color="light" disabled>
+              Remove
+            </Button>
+          )
+        ) : (
+          <></>
         )}
         <div className="flex">
           <Dropdown

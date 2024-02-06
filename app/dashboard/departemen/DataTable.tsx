@@ -293,6 +293,7 @@ export default function DataTable() {
             table={table}
             searchValue={globalFilter ?? ""}
             onChange={(value) => setGlobalFilter(String(value))}
+            isFiturCrud={true}
           />
           <CoreDataTable table={table} />
           <BottomTable table={table} />
