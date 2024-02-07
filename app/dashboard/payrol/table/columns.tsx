@@ -9,6 +9,7 @@ import IndeterminateCheckbox from "@/app/components/ui/IndeterminateCheckbox";
 import { TableCell } from "@/app/components/ui/TableCell";
 import { EditCell } from "@/app/components/ui/EditCell";
 import { Payrol } from "@/app/components/models/payrol_model";
+import { PrintCell } from "@/app/components/ui/PrintCell";
 
 const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   let dir = 0;
@@ -105,5 +106,10 @@ export const columns = [
       disabled: true,
       pattern: "^[a-zA-Z ]+$",
     },
+  }),
+  columnHelper.display({
+    id: "edit",
+    size: 10,
+    cell: PrintCell,
   }),
 ];

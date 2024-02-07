@@ -279,7 +279,7 @@ export default function DataTable() {
     setNotification(null);
 
     setData([...originalData]);
-  }, [isValidating, error, initTable]);
+  }, [isValidating, error, initTable, originalData]);
 
   return (
     table && (
