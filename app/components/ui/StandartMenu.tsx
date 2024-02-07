@@ -47,15 +47,16 @@ export default function StandartMenu({
         ) : (
           <></>
         )}
-        <div className="flex">
+        <div className="flex items-center gap-4 ">
           <Dropdown
-            className="h-1/2 overflow-auto items-center flex"
+            className="max-h-screen overflow-auto"
             size="xs"
             color="light"
             label="Column"
+            placement="bottom"
             dismissOnClick={false}
           >
-            <Dropdown.Header>
+            <Dropdown.Header key={"header"}>
               <div className="flex items-center gap-2">
                 <Checkbox
                   id="header"

@@ -7,14 +7,17 @@ export default function DropDownUserNavbar() {
   const { data: session } = useSession();
   const handleLogout = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/logout", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session?.user?.access_token}`,
-        },
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_URL_API_DRIVER_BENEFIT}/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.user?.access_token}`,
+          },
+        }
+      );
 
       if (!res.ok) {
         console.log(res.statusText);

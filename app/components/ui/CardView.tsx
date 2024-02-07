@@ -12,7 +12,7 @@ const iconMap = {
   invoices: InboxIcon,
 };
 
-export default function Card({
+export default function CardView({
   title,
   value,
   type,
@@ -24,12 +24,12 @@ export default function Card({
   const Icon = iconMap[type];
 
   return (
-    <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
+    <div className="block max-w-sm p-6 bg-gray-100 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
       <div className="flex p-4">
-        {Icon ? <Icon className="h-5 w-5 text-gray-700" /> : null}
-        <h3 className="ml-2 text-sm font-medium">{title}</h3>
+        {Icon ? <Icon className="h-5 w-5 text-gray-900" /> : null}
+        <h3 className="ml-2 text-xs font-medium">{title}</h3>
       </div>
-      <p className="truncate rounded-xl bg-white px-4 py-8 text-center text-2xl">
+      <p className="dark:bg-gray-900 dark:border-gray-500 truncate rounded-xl bg-white px-4 py-8 text-center text-2xl">
         {value}
       </p>
     </div>

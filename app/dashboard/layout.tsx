@@ -28,7 +28,7 @@ export default function RootLayout({
                   data-drawer-toggle="logo-sidebar"
                   aria-controls="logo-sidebar"
                   type="button"
-                  className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                  className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                 >
                   <span className="sr-only">Open sidebar</span>
                   <svg
@@ -67,7 +67,7 @@ export default function RootLayout({
 
         <aside
           id="logo-sidebar"
-          className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+          className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
           // className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 lg:translate-x-0 xl:translate-x-0 2xl:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
           aria-label="Sidebar"
           aria-hidden="true"
@@ -225,13 +225,21 @@ export default function RootLayout({
                       Payrol
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                      href={"/dashboard/tabungan"}
+                    >
+                      Simpanan
+                    </Link>
+                  </li>
                 </ul>
               </li>
             </ul>
           </div>
         </aside>
 
-        <div className=" bg-white dark:bg-gray-900 h-full min-h-screen flex flex-col">
+        <div className="sm:ml-64 bg-white dark:bg-gray-900 h-full min-h-screen flex flex-col">
           <div className="flex-1 p-2 bg-white dark:bg-gray-900 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
             {children}
           </div>

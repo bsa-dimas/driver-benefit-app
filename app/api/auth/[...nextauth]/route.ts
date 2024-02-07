@@ -11,9 +11,12 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const res = await fetch("http://localhost:8000/sanctum/csrf-cookie", {
-          method: "GET",
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_URL_WEB}/sanctum/csrf-cookie`,
+          {
+            method: "GET",
+          }
+        );
 
         const setCookieHeader = res.headers.get("set-cookie");
         // console.log("setCookieHeader", setCookieHeader)
@@ -56,7 +59,7 @@ export const authOptions: NextAuthOptions = {
         try {
           // console.log(options)
           const response = await fetch(
-            "http://localhost:8000/api/login",
+            `${process.env.NEXT_PUBLIC_URL_API_DRIVER_BENEFIT}/login`,
             options
           );
 
