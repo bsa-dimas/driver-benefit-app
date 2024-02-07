@@ -8,13 +8,8 @@ export default function StandartMenu({
   onClickAdd,
   searchValue: initialValue,
   onChange,
-}: {
-  isFiturCrud: boolean;
-  table: any;
-  onClickAdd: any;
-  searchValue: string | number;
-  onChange: (value: string | number) => void;
-}) {
+  onExportExcel,
+}: any) {
   const meta = table.options.meta;
   const selectedRows = table.getSelectedRowModel().rows;
   const removeRows = () => {
@@ -47,10 +42,17 @@ export default function StandartMenu({
         ) : (
           <></>
         )}
+
+        {onExportExcel && (
+          <Button size="xs" color="light" onClick={onExportExcel}>
+            Export To Excel
+          </Button>
+        )}
+
         <div className="flex items-center gap-4 ">
           <Dropdown
             className="max-h-screen overflow-auto"
-            size="xs"
+            size="sm"
             color="light"
             label="Column"
             placement="bottom"

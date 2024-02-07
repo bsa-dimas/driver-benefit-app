@@ -10,12 +10,17 @@ import DropDownUserNavbar from "../components/ui/DropDownUserNavbar";
 import Link from "next/link";
 import FlowBiteScript from "./FlowBiteScript";
 import { GrTransaction } from "react-icons/gr";
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const path = usePathname();
+  const isActive =
+    "text-white dark:text-gray-500 bg-gray-300 dark:bg-gray-900 rounded-lg";
+
   return (
     <Flowbite>
       <div className="">
@@ -67,7 +72,7 @@ export default function RootLayout({
 
         <aside
           id="logo-sidebar"
-          className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+          className="fixed top-0 left-0 z-40 w-64 h-screen pt-16 transition-transform -translate-x-full bg-red-300 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
           // className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 lg:translate-x-0 xl:translate-x-0 2xl:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
           aria-label="Sidebar"
           aria-hidden="true"
@@ -139,7 +144,7 @@ export default function RootLayout({
                   </svg>
                 </button>
                 <ul id="dropdown-example" className="hidden py-2 space-y-2">
-                  <li>
+                  <li className={path === "/dashboard/users" ? isActive : ""}>
                     <Link
                       className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                       href={"/dashboard/users"}
@@ -147,7 +152,7 @@ export default function RootLayout({
                       Users
                     </Link>
                   </li>
-                  <li>
+                  <li className={path === "/dashboard/sopir" ? isActive : ""}>
                     <Link
                       className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                       href={"/dashboard/sopir"}
@@ -155,7 +160,7 @@ export default function RootLayout({
                       Sopir
                     </Link>
                   </li>
-                  <li>
+                  <li className={path === "/dashboard/periode" ? isActive : ""}>
                     <Link
                       className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                       href={"/dashboard/periode"}
@@ -163,7 +168,11 @@ export default function RootLayout({
                       Periode
                     </Link>
                   </li>
-                  <li>
+                  <li
+                    className={
+                      path === "/dashboard/tanggallibur" ? isActive : ""
+                    }
+                  >
                     <Link
                       className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                       href={"/dashboard/tanggallibur"}
@@ -171,7 +180,9 @@ export default function RootLayout({
                       Tanggal Libur
                     </Link>
                   </li>
-                  <li>
+                  <li
+                    className={path === "/dashboard/departemen" ? isActive : ""}
+                  >
                     <Link
                       className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                       href={"/dashboard/departemen"}
@@ -209,7 +220,7 @@ export default function RootLayout({
                   </svg>
                 </button>
                 <ul id="dropdown-example2" className="hidden py-2 space-y-2">
-                  <li>
+                  <li className={path === "/dashboard/draft" ? isActive : ""}>
                     <Link
                       className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                       href={"/dashboard/draft"}
@@ -217,7 +228,7 @@ export default function RootLayout({
                       Draft
                     </Link>
                   </li>
-                  <li>
+                  <li className={path === "/dashboard/payrol" ? isActive : ""}>
                     <Link
                       className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                       href={"/dashboard/payrol"}
@@ -225,7 +236,9 @@ export default function RootLayout({
                       Payrol
                     </Link>
                   </li>
-                  <li>
+                  <li
+                    className={path === "/dashboard/tabungan" ? isActive : ""}
+                  >
                     <Link
                       className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                       href={"/dashboard/tabungan"}

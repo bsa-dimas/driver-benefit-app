@@ -48,6 +48,8 @@ import SkeletonCoreTable from "@/app/components/ui/SkeletonCoreTable";
 import StandartMenu from "@/app/components/ui/StandartMenu";
 import CreateForm from "@/app/components/lib/CreateForm";
 import ModalDelete from "@/app/components/ui/ModalDelete";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -239,6 +241,23 @@ export default function DataTable() {
     setModalDelete(false);
   };
 
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Buffer to store the generated Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+    });
+
+    saveAs(blob, "data.xlsx");
+  };
+
   useEffect(() => {
     setTable(initTable);
   }, [initTable]);
@@ -303,8 +322,9 @@ export default function DataTable() {
             onClickAdd={null}
             table={table}
             searchValue={globalFilter ?? ""}
-            onChange={(value) => setGlobalFilter(String(value))}
+            onChange={(value: any) => setGlobalFilter(String(value))}
             isFiturCrud={false}
+            onExportExcel={exportToExcel}
           />
           <CoreDataTable table={table} />
           <BottomTable table={table} />
