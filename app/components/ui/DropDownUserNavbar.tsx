@@ -11,7 +11,6 @@ export default function DropDownUserNavbar() {
         `${process.env.NEXT_PUBLIC_URL_API_DRIVER_BENEFIT}/logout`,
         {
           method: "POST",
-          credentials: "include",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${session?.user?.access_token}`,
@@ -47,10 +46,6 @@ export default function DropDownUserNavbar() {
             name@flowbite.com
           </span>
         </Dropdown.Header>
-        <Dropdown.Item>Dashboard</Dropdown.Item>
-        <Dropdown.Item>Settings</Dropdown.Item>
-        <Dropdown.Item>Earnings</Dropdown.Item>
-        <Dropdown.Divider />
         <Dropdown.Item onClick={() => handleLogout()}>Sign out</Dropdown.Item>
       </Dropdown>
     </div>

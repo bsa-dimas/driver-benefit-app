@@ -4,7 +4,8 @@ import "./globals.css";
 import Provider from "./providers/ClientProvider";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { ThemeModeScript } from "flowbite-react";
+import { Flowbite, ThemeModeScript } from "flowbite-react";
+import FlowBiteScript from "./dashboard/FlowBiteScript";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider session={session}>{children}</Provider>
+        <Flowbite>
+          <Provider session={session}>{children}</Provider>
+        </Flowbite>
       </body>
     </html>
   );

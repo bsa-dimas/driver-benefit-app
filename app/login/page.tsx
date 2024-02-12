@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "flowbite-react";
 import {
   SessionProvider,
   signIn,
@@ -7,12 +8,15 @@ import {
 } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import React from "react";
+import React, { useState } from "react";
 
 export default function Login() {
   const { push } = useRouter();
+  const [isLoading, setLoading] = useState(false);
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await signIn("credentials", {
         redirect: false,
@@ -20,12 +24,14 @@ export default function Login() {
         password: e.target.password.value,
         callbackUrl: "/dashboard",
       });
+      setLoading(false);
       if (!res?.error) {
         push("/dashboard");
       } else {
         console.log(res.error);
       }
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
   };
@@ -84,9 +90,17 @@ export default function Login() {
                   Forgot password?
                 </a>
               </div>
-              <button className="w-full text-slate-300 bg-slate-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+              <Button
+                type="submit"
+                className="w-full"
+                // className="w-full text-slate-300 bg-slate-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                isProcessing={isLoading}
+              >
+                Sign In
+              </Button>
+              {/* <button className="w-full text-slate-300 bg-slate-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 Sign in
-              </button>
+              </button> */}
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{" "}
                 <a
