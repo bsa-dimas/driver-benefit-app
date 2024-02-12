@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { Dispatch, SetStateAction } from "react";
 
 type Props = {
@@ -15,9 +16,10 @@ export default function Modal({ show, setShow }: Props) {
               className="absolute top-5 right-5 bg-gray-300 p-3 rounded-full hover:bg-gray-400 transition-all cursor-pointer"
               onClick={() => setShow(false)}
             >
-              <img
+              <Image
                 src="https://iconape.com/wp-content/png_logo_vector/cross-2.png"
                 className="h-3 w-3"
+                alt="image"
               />
             </div>
             <div className="font-bold text-2xl">Order placed successfully!</div>

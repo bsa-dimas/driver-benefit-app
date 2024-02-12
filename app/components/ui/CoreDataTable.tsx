@@ -49,7 +49,7 @@ function Filter({
       typeof firstValue === "number"
         ? []
         : Array.from(column.getFacetedUniqueValues().keys()).sort(),
-    [column.getFacetedUniqueValues()]
+    [column.getFacetedUniqueValues(), firstValue, column]
   );
 
   return typeof firstValue === "number" ? (

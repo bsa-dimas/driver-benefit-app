@@ -32,7 +32,7 @@ export const TableCell = ({ getValue, row, column, table }: any) => {
       !initialValue ? setValue("") : setValue(initialValue);
     }
     // !initialValue ? setValue("") : setValue(initialValue);
-  }, [initialValue]);
+  }, [initialValue, columnMeta?.type]);
 
   const onBlur = (e: ChangeEvent<HTMLInputElement>) => {
     displayValidationMessage(e);

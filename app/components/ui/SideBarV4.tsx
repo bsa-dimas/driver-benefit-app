@@ -12,6 +12,8 @@ import {
   CalendarIcon,
 } from "@heroicons/react/24/outline";
 import { FaAngleDown, FaAngleRight, FaChartPie } from "react-icons/fa6";
+import SubItemNav from "./SubItemNav";
+import ItemNav from "./ItemNav";
 
 type NavItem = {
   label: string;
@@ -89,10 +91,18 @@ const itmes: NavItem[] = [
   },
 ];
 
+type DropDownType = {
+  isOpen: boolean;
+};
+
 export default function SideBarV4({ shown, closeSideBar }: any) {
   const path = usePathname();
   const isActive =
     "text-white dark:text-gray-500 bg-gray-300 dark:bg-gray-900 rounded-lg";
+
+  const [active, setActive] = useState({
+    isActive: null,
+  });
 
   return (
     <div>
@@ -110,50 +120,17 @@ export default function SideBarV4({ shown, closeSideBar }: any) {
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             {itmes.map((item, index) => {
-              const [openDropDown, setOpenDropDown] = useState(false);
               return (
-                <li key={index} onClick={() => setOpenDropDown(!openDropDown)}>
+                <li key={index} onClick={() => {}}>
                   {item.subItem.length > 0 ? (
-                    <div className="cursor-pointer items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                      <div className="flex">
-                        {item.icon}
-                        <span className="flex-1 ms-3">{item.label}</span>
-                        <div className="my-auto">
-                          {openDropDown ? <FaAngleRight /> : <FaAngleDown />}
-                        </div>
-                      </div>
-                      <ul
-                        className={classNames({
-                          "flex-none": true,
-                          "py-2 space-y-2": true,
-                          hidden: openDropDown,
-                        })}
-                      >
-                        {item.subItem.map((p, i) => {
-                          return (
-                            <li
-                              key={i}
-                              className={`${
-                                path === p.href ? isActive : ""
-                              }  ml-7`}
-                              onClick={() => closeSideBar(false)}
-                            >
-                              <Link
-                                href={p.href}
-                                className={classNames({
-                                  "flex p-2 text-gray-900 transition rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700":
-                                    true,
-                                  "text-white dark:text-gray-500 bg-gray-300 dark:bg-gray-700 rounded-lg":
-                                    path === item.href,
-                                })}
-                              >
-                                {p.label}
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </div>
+                    <ItemNav
+                      item={item}
+                      isActive={isActive}
+                      closeSideBar={() => {
+                        closeSideBar(false);
+                      }}
+                      path={path}
+                    />
                   ) : (
                     <Link
                       href={item.href}
@@ -163,7 +140,7 @@ export default function SideBarV4({ shown, closeSideBar }: any) {
                         "text-white dark:text-gray-500 bg-gray-300 dark:bg-gray-900 rounded-lg":
                           path === item.href,
                       })}
-                      onClick={() => closeSideBar(false)}
+                      // onClick={() => closeSideBar(false)}
                     >
                       {item.icon}
 

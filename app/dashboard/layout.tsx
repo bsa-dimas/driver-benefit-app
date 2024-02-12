@@ -15,6 +15,7 @@ import SideBarV2 from "../components/ui/SideBarV2";
 import classNames from "classnames";
 import SideBarV4 from "../components/ui/SideBarV4";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function RootLayout({
   children,
@@ -55,7 +56,7 @@ export default function RootLayout({
                 </svg>
               </button>
               <a href="#" className="flex ms-2 md:me-24">
-                <img src="/images/logo.png" className="h-8 me-3" alt="Logo" />
+                <Image src="/images/logo.png" className="h-8 me-3" alt="Logo" />
                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                   Driver Benefit
                 </span>

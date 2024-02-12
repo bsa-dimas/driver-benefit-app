@@ -10,7 +10,7 @@ export default function KalkulasiMenu({
 }: any) {
   return (
     <div className="flex gap-2">
-      <Select sizing="sm" id="countries" required onChange={onChangePeriode}>
+      <Select sizing="sm" name="periode" required onChange={onChangePeriode}>
         <option value={""} disabled>
           Plih periode
         </option>
