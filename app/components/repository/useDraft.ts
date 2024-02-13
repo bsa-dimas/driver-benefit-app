@@ -30,6 +30,16 @@ async function deleteRequest(id: string) {
   return response.json();
 }
 
+async function deleteSelectionRequest(id: string) {
+  const response = await CredentialFetch(`${url}/deletebulkid`, {
+    method: "POST",
+    body: JSON.stringify({
+      id: id,
+    }),
+  });
+  return response.json();
+}
+
 async function getRequest() {
   const response = await CredentialFetch(url, {});
   if (response.status === 401) return redirect("/login?message=login expire");
@@ -89,6 +99,12 @@ export default function usePeriode() {
     });
   };
 
+  const deleteRowSelection = async (id: string) => {
+    return deleteSelectionRequest(id).finally(() => {
+      mutate(url);
+    });
+  };
+
   const addRow = async (postData: DrafTransaksi) => {
     return addRequest(postData).finally(() => {
       mutate(url);
@@ -118,6 +134,7 @@ export default function usePeriode() {
     isValidating,
     error,
     addRow,
+    deleteRowSelection,
     updateRow,
     deleteRow,
     addImportData,

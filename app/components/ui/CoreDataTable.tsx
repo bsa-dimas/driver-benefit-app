@@ -19,6 +19,7 @@ declare module "@tanstack/react-table" {
     addRow: any;
     removeRow: any;
     revertData: any;
+    removeSelectedRows: any;
   }
   interface FilterFns {
     myCustomFilter: FilterFn<unknown>;
@@ -159,7 +160,7 @@ export default function CoreDataTable({ table: table }: { table: any }) {
           {table.getRowModel().rows.map((row: any) => (
             <tr
               key={row.id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 "
             >
               {row.getVisibleCells().map((cell: any) => (
                 <td

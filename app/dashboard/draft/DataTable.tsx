@@ -109,6 +109,7 @@ export default function DataTable() {
     addRow,
     updateRow,
     deleteRow,
+    deleteRowSelection,
     addImportData,
     postData,
     postingDraftData,
@@ -135,6 +136,7 @@ export default function DataTable() {
   const [periode, setPeriode] = useState<string>("");
   const [loader, setLoader] = useState(false);
   const [file, setFile] = useState<any>();
+  const [loading, setLoading] = useState<any>();
 
   const uploadToClient = (e: any) => {
     if (e.target.files && e.target.files[0]) {
@@ -211,6 +213,10 @@ export default function DataTable() {
         setRowIdForDelete(rowIndex);
         setModalDelete(true);
       },
+      removeSelectedRows: (selectedRows: number[]) => {
+        setRowIdForDelete(selectedRows);
+        setModalDelete(true);
+      },
     },
     state: {
       sorting,
@@ -246,6 +252,15 @@ export default function DataTable() {
 
   const submitFormDelete = async (id: number) => {
     deleteRow(data[id].id)
+      .then((data) => handleNotif(data))
+      .finally(() => {
+        setRowIdForDelete(null);
+        setModalDelete(false);
+      });
+  };
+
+  const submitFormDeleteAll = async (selectedRows: number[]) => {
+    deleteRowSelection(selectedRows.toString())
       .then((data) => handleNotif(data))
       .finally(() => {
         setRowIdForDelete(null);
@@ -305,7 +320,11 @@ export default function DataTable() {
 
         <ModalDelete
           onSubmit={() => {
-            submitFormDelete(rowIdForDelete);
+            if (rowIdForDelete.constructor === Array) {
+              submitFormDeleteAll(rowIdForDelete);
+            } else {
+              submitFormDelete(rowIdForDelete);
+            }
           }}
           isOpen={modalDelete}
           closeModal={closeModalDelete}
@@ -351,10 +370,12 @@ export default function DataTable() {
           />
 
           <ImportExportMenu
+            isLoading={loading}
             onSubmitImportFile={async () => {
-              const response = await addImportData(file).then((data) =>
-                handleNotif(data)
-              );
+              setLoading(true);
+              await addImportData(file)
+                .then((data) => handleNotif(data))
+                .finally(() => setLoading(false));
             }}
             onChange={uploadToClient}
             onClickExport={async () => {

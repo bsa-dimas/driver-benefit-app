@@ -14,7 +14,7 @@ export default function StandartMenu({
   const selectedRows = table.getSelectedRowModel().rows;
   const removeRows = () => {
     meta.removeSelectedRows(
-      table.getSelectedRowModel().rows.map((row: any) => row.index)
+      table.getSelectedRowModel().rows.map((row: any) => row.original.id)
     );
     table.resetRowSelection();
   };
@@ -31,7 +31,7 @@ export default function StandartMenu({
         )}
         {isFiturCrud ? (
           selectedRows.length > 0 ? (
-            <Button size="xs" color="light">
+            <Button size="xs" color="light" onClick={removeRows}>
               Remove
             </Button>
           ) : (
