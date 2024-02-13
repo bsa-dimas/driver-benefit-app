@@ -51,6 +51,8 @@ import ModalDelete from "@/app/components/ui/ModalDelete";
 import KalkulasiMenu from "@/app/components/ui/KalkulasiMenu";
 import ReportDraftMenu from "@/app/components/ui/ReportDraftMenu";
 import usePeriode from "@/app/components/repository/usePeriode";
+import ImportExportMenu from "@/app/components/ui/ImportExportMenu";
+import CredentialFetch from "@/app/components/lib/CredentialFetch";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -132,6 +134,15 @@ export default function DataTable() {
   const [rowIdForDelete, setRowIdForDelete] = useState<any>(null);
   const [periode, setPeriode] = useState<string>("");
   const [loader, setLoader] = useState(false);
+  const [file, setFile] = useState<any>();
+
+  const uploadToClient = (e: any) => {
+    if (e.target.files && e.target.files[0]) {
+      const i = e.target.files[0];
+
+      setFile(i);
+    }
+  };
 
   const handleNotif = (data: any) => {
     setNtCrud({
@@ -337,6 +348,26 @@ export default function DataTable() {
             dataPeriode={dataPeriode}
             postDataToTransaksi={postDataToTransaksi}
             postDraftData={postDraftData}
+          />
+
+          <ImportExportMenu
+            onSubmitImportFile={async () => {
+              const response = await addImportData(file).then((data) =>
+                handleNotif(data)
+              );
+            }}
+            onChange={uploadToClient}
+            onClickExport={async () => {
+              const res = await CredentialFetch(
+                `${process.env.NEXT_PUBLIC_URL_API_DRIVER_BENEFIT}/export/draft-transaksi`,
+                {}
+              );
+              const blob = await res.blob();
+              const url = window.URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.click();
+            }}
           />
 
           <StandartMenu

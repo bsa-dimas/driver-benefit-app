@@ -1,3 +1,4 @@
+import { Button, FileInput } from "flowbite-react";
 import React from "react";
 import { BsFileEarmarkExcelFill } from "react-icons/bs";
 
@@ -9,21 +10,16 @@ export default function ImportExportMenu({
   return (
     <div className="flex gap-2">
       <div className="flex gap-2">
-        <input
-          className="file-input file-input-bordered file-input-sm w-full max-w-xs"
-          type="file"
-          name="file"
-          onChange={onChange}
-        />
-        <button className="btn btn-sm" onClick={onSubmitImportFile}>
+        <FileInput name="file" onChange={onChange} sizing="sm" />
+        <Button size="xs" color="light" onClick={onSubmitImportFile}>
           <BsFileEarmarkExcelFill />
           Import
-        </button>
+        </Button>
       </div>
-      <button className="btn btn-sm" onClick={onClickExport}>
+      <Button size="xs" color="light" onClick={onClickExport}>
         <BsFileEarmarkExcelFill />
         Export
-      </button>
+      </Button>
     </div>
   );
 }

@@ -41,9 +41,9 @@ export default function DropDownUserNavbar() {
         }
       >
         <Dropdown.Header>
-          <span className="block text-sm">Bonnie Green</span>
+          <span className="block text-sm">{session?.user?.user?.name}</span>
           <span className="block truncate text-sm font-medium">
-            name@flowbite.com
+            {session?.user?.user?.email}
           </span>
         </Dropdown.Header>
         <Dropdown.Item onClick={() => handleLogout()}>Sign out</Dropdown.Item>

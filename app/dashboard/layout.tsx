@@ -56,7 +56,14 @@ export default function RootLayout({
                 </svg>
               </button>
               <a href="#" className="flex ms-2 md:me-24">
-                <Image src="/images/logo.png" className="h-8 me-3" alt="Logo" />
+                <Image
+                  width={100}
+                  height={200}
+                  priority={true}
+                  src="/images/logo.png"
+                  className="h-8 me-3"
+                  alt="Logo"
+                />
                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                   Driver Benefit
                 </span>
