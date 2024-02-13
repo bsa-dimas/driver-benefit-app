@@ -2,6 +2,7 @@ import useSWR, { mutate } from "swr";
 import { TanggalLibur } from "../models/tanggallibur_model";
 import { getSession } from "next-auth/react";
 import CredentialFetch from "../lib/CredentialFetch";
+import { redirect } from "next/navigation";
 
 const url = `/tanggallibur`;
 
@@ -30,11 +31,16 @@ async function deleteRequest(id: string) {
 
 async function getRequest() {
   const response = await CredentialFetch(url, {});
+  if (!response.ok) return undefined;
   return response.json();
 }
 
 export default function useTanggalLibur() {
   const { data, isValidating, error } = useSWR(url, getRequest);
+
+  // if (!data) {
+  //   redirect("/login?message=login expire");
+  // }
 
   const updateRow = async (id: string, postData: TanggalLibur) => {
     return updateRequest(id, postData).finally(() => {

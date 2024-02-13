@@ -2,6 +2,8 @@ import useSWR, { mutate } from "swr";
 import { DrafTransaksi } from "../models/draft_transaksi_model";
 import { getSession } from "next-auth/react";
 import CredentialFetch from "../lib/CredentialFetch";
+import CredentialUploadFetch from "../lib/CredentialUploadFetch";
+import { redirect } from "next/navigation";
 
 const url = `/draft-transaksi`;
 
@@ -30,6 +32,7 @@ async function deleteRequest(id: string) {
 
 async function getRequest() {
   const response = await CredentialFetch(url, {});
+  if (response.status === 401) return redirect("/login?message=login expire");
   return response.json();
 }
 
@@ -60,7 +63,7 @@ const importData = async (file: any) => {
   const body = new FormData();
   body.append("file", file);
 
-  const response = await CredentialFetch(`${url}/import-excel`, {
+  const response = await CredentialUploadFetch(`${url}/import-excel`, {
     method: "POST",
     body: body,
   });
@@ -69,6 +72,10 @@ const importData = async (file: any) => {
 
 export default function usePeriode() {
   const { data, isValidating, error } = useSWR(url, getRequest);
+
+  // if (!data) {
+  //   redirect("/login?message=login expire");
+  // }
 
   const updateRow = async (id: string, postData: DrafTransaksi) => {
     return updateRequest(id, postData).finally(() => {

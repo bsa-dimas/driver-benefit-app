@@ -2,6 +2,7 @@ import useSWR, { mutate } from "swr";
 import { Periode } from "../models/periode_model";
 import { getSession } from "next-auth/react";
 import CredentialFetch from "../lib/CredentialFetch";
+import { redirect } from "next/navigation";
 
 const url = `/periode`;
 
@@ -30,12 +31,13 @@ async function deleteRequest(id: string) {
 
 async function getRequest() {
   const response = await CredentialFetch(url, {});
+  if (!response.ok) return undefined;
   return response.json();
 }
 
 async function getPeriodeLockFalse() {
   const response = await CredentialFetch(`/getPeriodeLockFalse`, {});
-
+  if (!response.ok) return undefined;
   return response.json();
 }
 
@@ -47,6 +49,10 @@ export default function usePeriode() {
     isValidating: isValidatingDraftTransaksi,
     error: errorDraftTransaksi,
   } = useSWR(`${url}/getPeriodeLockFalse`, getPeriodeLockFalse);
+
+  // if (!data) {
+  //   redirect("/login?message=login expire");
+  // }
 
   const updateRow = async (id: string, postData: Periode) => {
     return updateRequest(id, postData).finally(() => {

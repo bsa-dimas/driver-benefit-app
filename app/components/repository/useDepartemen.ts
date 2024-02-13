@@ -2,6 +2,7 @@ import useSWR, { mutate } from "swr";
 import { Departemen } from "../models/departemen_model";
 import { getSession } from "next-auth/react";
 import CredentialFetch from "../lib/CredentialFetch";
+import { redirect } from "next/navigation";
 
 const url = `/departemen`;
 
@@ -30,11 +31,16 @@ async function deleteRequest(id: string) {
 
 async function getRequest() {
   const response = await CredentialFetch(url, {});
+  if (!response.ok) return undefined;
   return response.json();
 }
 
 export default function usePeriode() {
   const { data, isValidating, error } = useSWR(url, getRequest);
+
+  // if (!data) {
+  //   redirect("/login?message=login expire");
+  // }
 
   const updateRow = async (id: string, postData: Departemen) => {
     return updateRequest(id, postData).finally(() => {

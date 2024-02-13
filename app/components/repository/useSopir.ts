@@ -38,9 +38,9 @@ async function getRequest() {
 export default function useUser() {
   const { data, isValidating, error } = useSWR(url, getRequest);
 
-  if (!data) {
-    redirect("/login?message=expire");
-  }
+  // if (!data) {
+  //   redirect("/login?message=expire");
+  // }
 
   const updateRow = async (id: string, postData: Sopir) => {
     return updateRequest(id, postData).finally(() => {
