@@ -241,6 +241,7 @@ export default function DataTable() {
     const newData: DrafTransaksi = {
       id: "",
       nik: event.target.nik.value,
+      nama: "",
       tgl_transaksi: event.target.tgl_transaksi.value,
       kode_transaksi: event.target.kode_transaksi.value,
       amount: event.target.amount.value,
@@ -301,10 +302,9 @@ export default function DataTable() {
     if (error) {
       setNotification({
         title: "Error",
-        msg: "Failed connect to server!",
+        msg: error.toString(),
         type: "error",
       });
-      console.log("error view...");
       return;
     }
 

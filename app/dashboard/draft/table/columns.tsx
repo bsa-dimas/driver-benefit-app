@@ -72,6 +72,16 @@ export const columns = [
       pattern: "^[a-zA-Z ]+$",
     },
   }),
+  columnHelper.accessor("nama", {
+    header: "Nama",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
   columnHelper.accessor("tgl_transaksi", {
     header: "Tgl Transaksi",
     size: 300,

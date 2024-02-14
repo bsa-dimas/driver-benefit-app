@@ -4,6 +4,7 @@ import { getSession } from "next-auth/react";
 import CredentialFetch from "../lib/CredentialFetch";
 import CredentialUploadFetch from "../lib/CredentialUploadFetch";
 import { redirect } from "next/navigation";
+import { throws } from "assert";
 
 const url = `/draft-transaksi`;
 
@@ -42,7 +43,10 @@ async function deleteSelectionRequest(id: string) {
 
 async function getRequest() {
   const response = await CredentialFetch(url, {});
-  if (response.status === 401) return redirect("/login?message=login expire");
+  if (response.status == 401) {
+    const error = new Error("Unauthenticated");
+    throw error;
+  }
   return response.json();
 }
 
@@ -81,11 +85,15 @@ const importData = async (file: any) => {
 };
 
 export default function usePeriode() {
-  const { data, isValidating, error } = useSWR(url, getRequest);
+  const { data, isValidating, error } = useSWR(url, getRequest, {
+    onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+      // Only retry up to 10 times.
+      if (retryCount >= 10) return;
 
-  // if (!data) {
-  //   redirect("/login?message=login expire");
-  // }
+      // Retry after 5 seconds.
+      setTimeout(() => revalidate({ retryCount }), 5000);
+    },
+  });
 
   const updateRow = async (id: string, postData: DrafTransaksi) => {
     return updateRequest(id, postData).finally(() => {
