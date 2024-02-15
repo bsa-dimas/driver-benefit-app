@@ -51,7 +51,7 @@ async function getRequest() {
 }
 
 async function postDataRequest(idPeriode: number) {
-  const response = await CredentialFetch(`${url}/post-draft-transaksi`, {
+  const response = await CredentialFetch(`${url}/kalkulasi-draft-transaksi`, {
     method: "POST",
     body: JSON.stringify({
       periode: idPeriode,

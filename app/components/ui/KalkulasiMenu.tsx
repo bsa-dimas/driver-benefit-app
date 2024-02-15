@@ -7,13 +7,13 @@ export default function KalkulasiMenu({
   dataPeriode,
   postDataToTransaksi,
   postDraftData,
+  isLoadingKalkulasi,
+  isLoadingPosting,
 }: any) {
   return (
     <div className="flex gap-2">
       <Select sizing="sm" name="periode" required onChange={onChangePeriode}>
-        <option value={""} disabled>
-          Plih periode
-        </option>
+        <option value={""}>Plih periode</option>
         {dataPeriode &&
           dataPeriode.map((periode: Periode, i: number) => {
             return (
@@ -24,10 +24,20 @@ export default function KalkulasiMenu({
           })}
       </Select>
 
-      <Button size="xs" color="light" onClick={postDataToTransaksi}>
+      <Button
+        size="xs"
+        color="light"
+        onClick={postDataToTransaksi}
+        isProcessing={isLoadingKalkulasi}
+      >
         Kalkulasi Perhitungan
       </Button>
-      <Button size="xs" color="light" onClick={postDraftData}>
+      <Button
+        size="xs"
+        color="light"
+        onClick={postDraftData}
+        isProcessing={isLoadingPosting}
+      >
         Posting Draft Data
       </Button>
     </div>

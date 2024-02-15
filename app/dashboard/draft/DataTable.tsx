@@ -134,9 +134,10 @@ export default function DataTable() {
   const [modalDelete, setModalDelete] = useState(false);
   const [rowIdForDelete, setRowIdForDelete] = useState<any>(null);
   const [periode, setPeriode] = useState<string>("");
-  const [loader, setLoader] = useState(false);
   const [file, setFile] = useState<any>();
   const [loading, setLoading] = useState<any>();
+  const [loadingKalkulasi, setLoadingKalkulasi] = useState<any>();
+  const [loadingPosting, setLoadingPosting] = useState<any>();
 
   const uploadToClient = (e: any) => {
     if (e.target.files && e.target.files[0]) {
@@ -277,18 +278,18 @@ export default function DataTable() {
     setModalDelete(false);
   };
 
-  const postDataToTransaksi = async () => {
-    setLoader(true);
+  const kalkulasiDataToTransaksi = async () => {
+    setLoadingKalkulasi(true);
     postData(periode)
       .then((data) => handleNotif(data))
-      .finally(() => setLoader(false));
+      .finally(() => setLoadingKalkulasi(false));
   };
 
-  const postDraftData = async () => {
-    setLoader(true);
+  const postingData = async () => {
+    setLoadingPosting(true);
     postingDraftData(periode)
       .then((data) => handleNotif(data))
-      .finally(() => setLoader(false));
+      .finally(() => setLoadingPosting(false));
   };
 
   useEffect(() => {
@@ -363,10 +364,14 @@ export default function DataTable() {
         <div className="flex flex-col overflow-x-auto gap-2">
           <ReportDraftMenu />
           <KalkulasiMenu
-            onChangePeriode={(e: any) => setPeriode(e.target.value)}
+            isLoadingKalkulasi={loadingKalkulasi}
+            isLoadingPosting={loadingPosting}
+            onChangePeriode={(e: any) => {
+              setPeriode(e.target.value);
+            }}
             dataPeriode={dataPeriode}
-            postDataToTransaksi={postDataToTransaksi}
-            postDraftData={postDraftData}
+            postDataToTransaksi={kalkulasiDataToTransaksi}
+            postDraftData={postingData}
           />
 
           <ImportExportMenu
