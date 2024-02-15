@@ -3,12 +3,27 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { BsFileEarmarkExcelFill } from "react-icons/bs";
 import { FaFilePdf } from "react-icons/fa";
+import CredentialReportFetch from "../lib/CredentialReportFetch";
 
 export default function ReportDraftMenu() {
   const [report, setReport] = useState();
   const onChange = (e: any) => {
     setReport(e.target.value);
   };
+
+  const getReportByDept = (e: any) => {
+    e.preventDefault();
+    // CredentialReportFetch(`/report-draft-by-departemen-pdf?by=${report}`, {
+    //   method: "GET",
+    // });
+    fetch("/api/pdf/dept", {
+      method: "GET",
+      body: JSON.stringify({
+        by: report,
+      }),
+    });
+  };
+
   return (
     <div className="flex gap-2">
       <Select sizing="sm" id="data" required onChange={onChange}>

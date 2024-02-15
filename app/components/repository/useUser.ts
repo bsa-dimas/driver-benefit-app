@@ -31,12 +31,24 @@ async function deleteRequest(id: string) {
 
 async function getRequest() {
   const response = await CredentialFetch(url, {});
-  if (!response.ok) return undefined;
+  if (response.status == 401) {
+    const error = new Error("Unauthenticated");
+    throw error;
+  }
   return response.json();
 }
 
 export default function useUser() {
-  const { data, isValidating, error } = useSWR(url, getRequest);
+  const { data, isValidating, error } = useSWR(url, getRequest, {
+    onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+      // Only retry up to 10 times.
+      if (retryCount >= 5) return;
+      console.log(retryCount);
+
+      // Retry after 5 seconds.
+      setTimeout(() => revalidate({ retryCount }), 5000);
+    },
+  });
 
   // if (!data) {
   //   redirect("/login?message=login expire");

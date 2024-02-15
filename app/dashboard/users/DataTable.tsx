@@ -189,6 +189,10 @@ export default function DataTable() {
         setRowIdForDelete(rowIndex);
         setModalDelete(true);
       },
+      removeSelectedRows: (selectedRows: number[]) => {
+        setRowIdForDelete(selectedRows);
+        setModalDelete(true);
+      },
     },
     state: {
       sorting,
@@ -249,10 +253,9 @@ export default function DataTable() {
     if (error) {
       setNotification({
         title: "Error",
-        msg: "Failed connect to server!",
+        msg: error.toString(),
         type: "error",
       });
-      console.log("error view...");
       return;
     }
 

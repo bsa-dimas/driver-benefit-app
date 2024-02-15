@@ -2,7 +2,7 @@ import { getSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 
-export default async function CredentialFetch(
+export default async function CredentialReportFetch(
   path: string,
   init: RequestInit | undefined
 ) {
@@ -13,8 +13,9 @@ export default async function CredentialFetch(
     {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        "Content-Type": "application/pdf",
+        Accept: "application/pdf",
+        "Content-Disposition": "attachment; filename=dummy.pdf",
       },
       ...init,
     }

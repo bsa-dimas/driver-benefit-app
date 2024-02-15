@@ -5,8 +5,6 @@ import Provider from "./providers/ClientProvider";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Flowbite, ThemeModeScript } from "flowbite-react";
-import FlowBiteScript from "./dashboard/FlowBiteScript";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

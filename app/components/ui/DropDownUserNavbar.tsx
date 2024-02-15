@@ -35,7 +35,7 @@ export default function DropDownUserNavbar() {
         label={
           <Avatar
             alt="User settings"
-            img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+            img={`https://ui-avatars.com/api/?name=${session?.user?.user?.name}`}
             rounded
           />
         }

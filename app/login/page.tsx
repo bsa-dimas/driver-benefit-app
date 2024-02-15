@@ -9,13 +9,22 @@ import {
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Login() {
   const param = useSearchParams();
+  const router = useRouter();
+  const { data: session } = useSession();
   const message = param.get("message");
   const { push } = useRouter();
   const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (session?.user) {
+      console.log(session);
+      router.push("/dashboard");
+    }
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -48,6 +57,7 @@ export default function Login() {
             width={100}
             height={200}
             priority={true}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             src="/images/logo.png"
             alt="logo"
           />
