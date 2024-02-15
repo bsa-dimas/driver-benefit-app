@@ -24,7 +24,7 @@ export default function Login() {
       console.log(session);
       router.push("/dashboard");
     }
-  }, []);
+  }, [session]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
