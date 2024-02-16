@@ -74,8 +74,118 @@ export const columns = [
       pattern: "^[a-zA-Z ]+$",
     },
   }),
+  columnHelper.accessor("nama", {
+    header: "Nama",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
   columnHelper.accessor("periode_transaksi_id", {
     header: "Periode",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("nama_periode", {
+    header: "Nama Periode",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("dari_tanggal", {
+    header: "Dari Tgl",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("sampai_tanggal", {
+    header: "Smp Tgl",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("nama_periode", {
+    header: "Nama Periode",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("dari_tanggal", {
+    header: "Dari Tgl",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("sampai_tanggal", {
+    header: "Smp Tgl",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("nama_periode", {
+    header: "Nama Periode",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("dari_tanggal", {
+    header: "Dari Tgl",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("sampai_tanggal", {
+    header: "Smp Tgl",
     size: 300,
     cell: TableCell,
     meta: {
@@ -97,6 +207,17 @@ export const columns = [
     },
   }),
   columnHelper.accessor("dept_id", {
+    header: "Dept Id",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("nama_departemen", {
     header: "Dept",
     size: 300,
     cell: TableCell,

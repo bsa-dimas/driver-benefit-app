@@ -107,7 +107,10 @@ export default function BottomTable({ table: initialTable }: { table: any }) {
           {initialTable.getState().pagination.pageIndex + 1} of{" "}
           {initialTable.getPageCount()}
         </strong>
-        <div>| Go to page:</div>
+        <div>
+          | Total: {initialTable.getFilteredRowModel().rows.length} | Go to
+          page:
+        </div>
       </span>
       <span className="flex items-center gap-1 text-sm">
         <input

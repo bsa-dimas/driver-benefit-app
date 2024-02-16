@@ -43,7 +43,9 @@ import MenuItem from "@/app/components/ui/MenuItem";
 import NotificationBottom from "@/app/components/ui/NotificationBottom";
 import SearchBar from "@/app/components/ui/SearchBar";
 import BottomTable from "@/app/components/ui/BottomTable";
-import CoreDataTable from "@/app/components/ui/CoreDataTable";
+import CoreDataTable, {
+  VisibilityState,
+} from "@/app/components/ui/CoreDataTable";
 import SkeletonCoreTable from "@/app/components/ui/SkeletonCoreTable";
 import StandartMenu from "@/app/components/ui/StandartMenu";
 import CreateForm from "@/app/components/lib/CreateForm";
@@ -134,6 +136,14 @@ export default function DataTable() {
     }, 5000);
   };
 
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
+  useEffect(() => {
+    setColumnVisibility({
+      id: false,
+    });
+  }, []);
+
   const initTable = useReactTable({
     data,
     columns,
@@ -198,7 +208,9 @@ export default function DataTable() {
       sorting,
       globalFilter,
       rowSelection,
+      columnVisibility,
     },
+    onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
