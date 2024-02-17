@@ -68,9 +68,20 @@ const authOptions: NextAuthOptions = {
             console.log("response", res);
             return res;
           } else {
-            console.log("HTTP error! Status:", response.status);
-            // Handle non-successful response here, return an appropriate JSON response.
-            return { error: "Authentication failed" };
+            return null;
+            // throw new Error("Wrong credentials. Try again.");
+
+            // const res = await response.json();
+            // console.log("response1", response);
+            // return {
+            //   error: "Authentication failed", // Error code based on the type of error
+            //   status: response.status, // HTTP status code
+            //   ok: false, // `true` if the signin was successful
+            //   url: null, // `null` if there was an error, otherwise URL to redirected to
+            // };
+            // console.log("HTTP error! Status:", response.status);
+            // // Handle non-successful response here, return an appropriate JSON response.
+            // return { error: "Authentication failed", status: response.status };
           }
         } catch (error) {
           console.log("Error", error);
@@ -86,11 +97,13 @@ const authOptions: NextAuthOptions = {
         token.user = user;
         token.accessToken = user.access_token;
       }
+      // console.log(token);
       return token;
     },
     async session({ session, token }) {
       session.accessToken = token.access_token as string;
       session.user = token.user;
+      // console.log(session);
       return session;
     },
   },

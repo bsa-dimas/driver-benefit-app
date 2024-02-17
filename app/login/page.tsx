@@ -15,36 +15,57 @@ export default function Login() {
   const param = useSearchParams();
   const router = useRouter();
   const { data: session } = useSession();
-  const message = param.get("message");
+  // const message = param.get("message");
   const { push } = useRouter();
+  const [message, setMessage] = useState<any>();
   const [isLoading, setLoading] = useState(false);
 
+  // useEffect(() => {
+  //   if (session?.user) {
+  //     console.log(session);
+  //     router.push("/dashboard");
+  //   }
+  // }, [session, router]);
+
   useEffect(() => {
-    if (session?.user) {
-      console.log(session);
-      router.push("/dashboard");
-    }
-  }, [session, router]);
+    setMessage(null);
+    setLoading(false);
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setLoading(true);
+
+    setMessage(null);
+
     try {
-      const res = await signIn("credentials", {
+      setLoading(true);
+
+      signIn("credentials", {
         redirect: false,
         email: e.target.email.value,
         password: e.target.password.value,
-        callbackUrl: "/dashboard",
-      });
-      setLoading(false);
-      if (!res?.error) {
-        push("/dashboard");
-      } else {
-        console.log(res.error);
-      }
+      })
+        .then(({ ok, error }: any) => {
+          if (ok) {
+            setLoading(false);
+            push("/dashboard");
+          } else {
+            setLoading(false);
+            setMessage("Authentication failed");
+          }
+        })
+        .catch(() => setLoading(false))
+        .finally(() => {
+          // setLoading(false);
+          // setTimeout(() => {
+          //   setLoading(false);
+          // }, 3000);
+        });
     } catch (err) {
-      setLoading(false);
+      // setLoading(false);
       console.log(err);
+    } finally {
+      // setLoading(false);
     }
   };
 
@@ -70,8 +91,8 @@ export default function Login() {
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               {message && (
-                <Alert color="warning" rounded>
-                  <span className="font-medium">Info!</span> {message}
+                <Alert color="failure" rounded>
+                  <span className="font-medium"> {message}</span>
                 </Alert>
               )}
               <div>
@@ -106,14 +127,6 @@ export default function Login() {
                   required
                 />
               </div>
-              <div className="flex items-center justify-between">
-                <a
-                  href="#"
-                  className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Forgot password?
-                </a>
-              </div>
               <Button
                 type="submit"
                 className="w-full"
@@ -122,18 +135,6 @@ export default function Login() {
               >
                 Sign In
               </Button>
-              {/* <button className="w-full text-slate-300 bg-slate-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                Sign in
-              </button> */}
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Sign up
-                </a>
-              </p>
             </form>
           </div>
         </div>
