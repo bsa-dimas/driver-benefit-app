@@ -35,7 +35,7 @@ export default function DropDownUserNavbar() {
         label={
           <Avatar
             alt="User settings"
-            img={`https://ui-avatars.com/api/?name=${session?.user?.user?.name}`}
+            img={`https://ui-avatars.com/api/?name=${session?.user?.user?.name}&background=random`}
             rounded
           />
         }

@@ -24,7 +24,7 @@ export default function CardView({
   const Icon = iconMap[type];
 
   return (
-    <div className="block max-w-sm p-6 bg-gray-100 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    <div className="relative bg-gray-100 border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
       <div className="flex p-4">
         {Icon ? <Icon className="h-5 w-5 text-gray-900" /> : null}
         <h3 className="ml-2 text-xs font-medium">{title}</h3>
