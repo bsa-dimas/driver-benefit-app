@@ -53,7 +53,9 @@ import { NextRequest, NextResponse } from "next/server";
 export default withAuth(
   function middleware(request) {
     const session = request?.nextauth?.token;
-    if (request.nextUrl.pathname === "/") return NextResponse.next();
+    if (session && request.nextUrl.pathname === "/")
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+
     if (!session && request.nextUrl.pathname !== "/login")
       return NextResponse.redirect(new URL("/login", request.url));
     if (session && request.nextUrl.pathname === "/login")
