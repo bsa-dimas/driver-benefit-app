@@ -56,11 +56,6 @@ export default function Dashboard() {
                 key={index}
               >
                 <CardView
-                  title={"Pendapatan Final"}
-                  value={toCurrency(data.pendapatanfinal)}
-                  type={"invoices"}
-                />
-                <CardView
                   title={"Pendapatan Total"}
                   value={toCurrency(data.pendapatantotal)}
                   type={"invoices"}
@@ -68,6 +63,11 @@ export default function Dashboard() {
                 <CardView
                   title={"Potongan Total"}
                   value={toCurrency(data.potongantotal)}
+                  type={"invoices"}
+                />
+                <CardView
+                  title={"Pendapatan Final"}
+                  value={toCurrency(data.pendapatanfinal)}
                   type={"invoices"}
                 />
               </div>

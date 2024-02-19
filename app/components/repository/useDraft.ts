@@ -84,7 +84,7 @@ const importData = async (file: any) => {
   return response.json();
 };
 
-export default function usePeriode() {
+export default function useDraft() {
   const { data, isValidating, error } = useSWR(url, getRequest, {
     onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
       // Only retry up to 10 times.

@@ -31,13 +31,11 @@ async function deleteRequest(id: string) {
 
 async function getRequest() {
   const response = await CredentialFetch(url, {});
-  if (!response.ok) return undefined;
   return response.json();
 }
 
 async function getPeriodeLockFalse() {
   const response = await CredentialFetch(`/getPeriodeLockFalse`, {});
-  if (!response.ok) return undefined;
   return response.json();
 }
 

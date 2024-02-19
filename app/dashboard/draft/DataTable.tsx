@@ -53,6 +53,8 @@ import ReportDraftMenu from "@/app/components/ui/ReportDraftMenu";
 import usePeriode from "@/app/components/repository/usePeriode";
 import ImportExportMenu from "@/app/components/ui/ImportExportMenu";
 import CredentialFetch from "@/app/components/lib/CredentialFetch";
+import { Periode } from "@/app/components/models/periode_model";
+import { Alert } from "flowbite-react";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -115,8 +117,10 @@ export default function DataTable() {
     postingDraftData,
   } = useDrafTransaksi();
 
-  const { dataDraftTransaksi: dataPeriode } = usePeriode();
+  const { data: dataPeriodeAll, dataDraftTransaksi: dataPeriode } =
+    usePeriode();
 
+  const [options, setOptions] = useState<any>([]);
   const [rowSelection, setRowSelection] = React.useState({});
   const [data, setData] = useState<DrafTransaksi[]>([]);
   const [editedRows, setEditedRows] = React.useState({});
@@ -138,6 +142,7 @@ export default function DataTable() {
   const [loading, setLoading] = useState<any>();
   const [loadingKalkulasi, setLoadingKalkulasi] = useState<any>();
   const [loadingPosting, setLoadingPosting] = useState<any>();
+  const [errorBE, setErrorBE] = useState<string[]>();
 
   const uploadToClient = (e: any) => {
     if (e.target.files && e.target.files[0]) {
@@ -281,7 +286,13 @@ export default function DataTable() {
   const kalkulasiDataToTransaksi = async () => {
     setLoadingKalkulasi(true);
     postData(periode)
-      .then((data) => handleNotif(data))
+      .then((data) => {
+        if (data.error) {
+          setErrorBE(data.error);
+        } else {
+          handleNotif(data);
+        }
+      })
       .finally(() => setLoadingKalkulasi(false));
   };
 
@@ -313,6 +324,16 @@ export default function DataTable() {
 
     setData([...originalData]);
   }, [isValidating, error, initTable, originalData]);
+
+  useEffect(() => {
+    dataPeriodeAll.map((periode: Periode, index: number) => {
+      options.push({
+        value: `${periode.id}`,
+        label: `${periode.dari_tanggal} - ${periode.sampai_tanggal}`,
+      });
+    });
+    setOptions(options);
+  }, [options]);
 
   return (
     table && (
@@ -362,17 +383,20 @@ export default function DataTable() {
         <div className="flex flex-col mx-2 gap-2"></div>
 
         <div className="flex flex-col overflow-x-auto gap-2">
-          <ReportDraftMenu />
-          <KalkulasiMenu
-            isLoadingKalkulasi={loadingKalkulasi}
-            isLoadingPosting={loadingPosting}
-            onChangePeriode={(e: any) => {
-              setPeriode(e.target.value);
-            }}
-            dataPeriode={dataPeriode}
-            postDataToTransaksi={kalkulasiDataToTransaksi}
-            postDraftData={postingData}
-          />
+          {errorBE && errorBE?.length > 0 && (
+            <Alert
+              color="failure"
+              onDismiss={() => {
+                setErrorBE([]);
+              }}
+            >
+              <ul>
+                {errorBE?.map((error, index) => (
+                  <li>{errorBE[index]}</li>
+                ))}
+              </ul>
+            </Alert>
+          )}
 
           <ImportExportMenu
             isLoading={loading}
@@ -395,6 +419,19 @@ export default function DataTable() {
               link.click();
             }}
           />
+
+          <KalkulasiMenu
+            isLoadingKalkulasi={loadingKalkulasi}
+            isLoadingPosting={loadingPosting}
+            onChangePeriode={(e: any) => {
+              setPeriode(e.target.value);
+            }}
+            dataPeriode={dataPeriode}
+            postDataToTransaksi={kalkulasiDataToTransaksi}
+            postDraftData={postingData}
+          />
+
+          <ReportDraftMenu dataPeriodeAll={dataPeriodeAll} />
 
           <StandartMenu
             onClickAdd={() => {

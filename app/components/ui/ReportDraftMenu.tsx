@@ -1,68 +1,85 @@
-import { Button, Select } from "flowbite-react";
+import { Button, Select as SelectFlowBite } from "flowbite-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsFileEarmarkExcelFill } from "react-icons/bs";
 import { FaFilePdf } from "react-icons/fa";
 import CredentialReportFetch from "../lib/CredentialReportFetch";
+import { Periode } from "../models/periode_model";
+import Select from "react-select";
 
-export default function ReportDraftMenu() {
+export default function ReportDraftMenu({ dataPeriodeAll }: any) {
   const [report, setReport] = useState();
   const onChange = (e: any) => {
     setReport(e.target.value);
   };
 
-  const getReportByDept = (e: any) => {
-    e.preventDefault();
-    // CredentialReportFetch(`/report-draft-by-departemen-pdf?by=${report}`, {
-    //   method: "GET",
-    // });
-    fetch("/api/pdf/dept", {
-      method: "GET",
-      body: JSON.stringify({
-        by: report,
-      }),
-    });
+  const [periode, setPeriode] = useState();
+  const onChangePeriode = (e: any) => {
+    setPeriode(e.target.value);
   };
 
   return (
     <div className="flex gap-2">
-      <Select sizing="sm" id="data" required onChange={onChange}>
-        <option key={0} value="">
+      <SelectFlowBite sizing="sm" required onChange={onChange}>
+        <option key={0} value="" className="p-2">
           Pilih Report By
         </option>
-        <option key={1} value="draft">
+        <option key={1} value="draft" className="p-2">
           Draft Data
         </option>
-        <option key={2} value="final">
+        <option key={2} value="final" className="p-2">
           Final Data
         </option>
-      </Select>
-      <a
-        href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-departemen-pdf?by=${report}`}
+      </SelectFlowBite>
+
+      {/* <Select
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        styles={{
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+          }),
+        }}
+        options={dataPeriodeAll}
+      /> */}
+
+      <SelectFlowBite sizing="sm" required onChange={onChangePeriode}>
+        <option key={0} value="">
+          Pilih Periode
+        </option>
+        {dataPeriodeAll.map((periode: Periode, index: number) => {
+          return (
+            <option key={index} value={periode.id} className="p-2">
+              {`${periode.dari_tanggal} - ${periode.sampai_tanggal}`}
+            </option>
+          );
+        })}
+      </SelectFlowBite>
+      <Button
+        size="xs"
+        color="light"
+        href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-departemen-pdf?by=${report}&periode_id=${periode}`}
         target="_blank"
       >
-        <Button size="xs" color="light">
-          <FaFilePdf />
-          Pdf By Dept
-        </Button>
-      </a>
-      <a
-        href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-nik-pdf?by=${report}`}
+        <FaFilePdf />
+        Pdf By Dept
+      </Button>
+      <Button
+        size="xs"
+        color="light"
+        href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-nik-pdf?by=${report}&periode_id=${periode}`}
         target="_blank"
       >
-        <Button size="xs" color="light">
-          <FaFilePdf />
-          Pdf By NIK
-        </Button>
-      </a>
-      <a
+        <FaFilePdf />
+        Pdf By NIK
+      </Button>
+      <Button
+        size="xs"
+        color="light"
         href={`${process.env.NEXT_PUBLIC_URL_WEB}/download-template-draft-transaksi?by=${report}`}
         target="_blank"
       >
-        <Button size="xs" color="light">
-          <BsFileEarmarkExcelFill /> Kalkulasi Perhitungan
-        </Button>
-      </a>
+        <BsFileEarmarkExcelFill /> Kalkulasi Perhitungan
+      </Button>
     </div>
   );
 }
