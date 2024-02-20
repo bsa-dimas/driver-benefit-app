@@ -456,6 +456,8 @@ export default function DataTable() {
             postDraftData={postingData}
           />
 
+          <ReportDraftMenu />
+
           <StandartMenu
             onClickAdd={() => {
               setModal(true);

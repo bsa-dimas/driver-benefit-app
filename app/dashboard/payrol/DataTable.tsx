@@ -52,6 +52,8 @@ import CreateForm from "@/app/components/lib/CreateForm";
 import ModalDelete from "@/app/components/ui/ModalDelete";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import ReportSummary from "@/app/components/ui/ReportSummary";
+import usePeriode from "@/app/components/repository/usePeriode";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -230,17 +232,6 @@ export default function DataTable() {
 
   const submitForm = async (event: any) => {
     event.preventDefault();
-
-    // const newData: Payrol = {
-    //   id: "",
-    //   nama_Payrol: event.target.nama_Payrol.value,
-    //   dari_tanggal: event.target.dari_tanggal.value,
-    //   sampai_tanggal: event.target.sampai_tanggal.value,
-    //   lock: false,
-    // };
-    // addRow(newData)
-    //   .then((data) => handleNotif(data))
-    //   .finally(() => setModal(false));
   };
 
   const submitFormDelete = async (id: number) => {
@@ -336,6 +327,7 @@ export default function DataTable() {
         />
 
         <div className="flex flex-col overflow-x-auto gap-2">
+          <ReportSummary />
           <StandartMenu
             onClickAdd={null}
             table={table}

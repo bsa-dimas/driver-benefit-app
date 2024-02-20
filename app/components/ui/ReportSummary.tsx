@@ -1,16 +1,13 @@
-import { Button, Select } from "flowbite-react";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { BsFileEarmarkExcelFill } from "react-icons/bs";
+import { Select, Button } from "flowbite-react";
+import React, { useState } from "react";
 import { FaFilePdf } from "react-icons/fa";
-import CredentialReportFetch from "../lib/CredentialReportFetch";
 import { Periode } from "../models/periode_model";
 import usePeriode from "../repository/usePeriode";
 
-export default function ReportDraftMenu() {
-  const { dataDraftTransaksi: dataPeriode } = usePeriode();
+export default function ReportSummary() {
+  const report = 1; //final
 
-  const report = 1; //draft
+  const { data: dataPeriodeAll } = usePeriode();
 
   const [periode, setPeriode] = useState();
   const onChange = (e: any) => {
@@ -23,7 +20,7 @@ export default function ReportDraftMenu() {
         <option key={0} value="">
           Pilih Periode
         </option>
-        {dataPeriode?.map((periode: Periode, index: number) => {
+        {dataPeriodeAll.map((periode: Periode, index: number) => {
           return (
             <option key={index} value={periode.id} className="p-2">
               {`${periode.dari_tanggal} - ${periode.sampai_tanggal}`}
@@ -38,7 +35,7 @@ export default function ReportDraftMenu() {
         target="_blank"
       >
         <FaFilePdf />
-        Pdf By Dept
+        Pdf Summary By Dept
       </Button>
       <Button
         size="xs"
@@ -47,7 +44,16 @@ export default function ReportDraftMenu() {
         target="_blank"
       >
         <FaFilePdf />
-        Pdf By NIK
+        Pdf Summary By NIK
+      </Button>
+      <Button
+        size="xs"
+        color="light"
+        href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-nik-pdf?by=${report}&periode_id=${periode}`}
+        target="_blank"
+      >
+        <FaFilePdf />
+        Pdf Slip Gaji By NIK
       </Button>
     </div>
   );

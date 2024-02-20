@@ -8,9 +8,5 @@ export default function Print() {
   const { data: dataPeriodeAll, dataDraftTransaksi: dataPeriode } =
     usePeriode();
 
-  return (
-    <div className="p-5">
-      <ReportDraftMenu dataPeriodeAll={dataPeriodeAll} />
-    </div>
-  );
+  return <div className="p-5">print</div>;
 }
