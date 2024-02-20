@@ -30,16 +30,16 @@ export default function KalkulasiMenu({
         onClick={postDataToTransaksi}
         isProcessing={isLoadingKalkulasi}
       >
-        Kalkulasi Perhitungan
+        Posting Draft Data
       </Button>
-      <Button
+      {/* <Button
         size="xs"
         color="light"
         onClick={postDraftData}
         isProcessing={isLoadingPosting}
       >
         Posting Draft Data
-      </Button>
+      </Button> */}
     </div>
   );
 }

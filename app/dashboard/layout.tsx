@@ -6,6 +6,7 @@ import {
   DarkThemeToggle,
   Flowbite,
   CustomFlowbiteTheme,
+  Sidebar,
 } from "flowbite-react";
 import DropDownUserNavbar from "../components/ui/DropDownUserNavbar";
 import Link from "next/link";
@@ -14,8 +15,9 @@ import { GrTransaction } from "react-icons/gr";
 import SideBarV2 from "../components/ui/SideBarV2";
 import classNames from "classnames";
 import SideBarV4 from "../components/ui/SideBarV4";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import React from "react";
 
 export default function RootLayout({
   children,
@@ -23,6 +25,88 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [sideBar, setSideBar] = useState(false);
+
+  // const ref = useRef<any>();
+  // useEffect(() => {
+  //   const checkIfClickedOutside = (e: any) => {
+  //     if (ref.current && !ref.current.contains(e.target)) {
+  //       // closeSideBar(false);
+  //       console.log(sideBar);
+  //       console.log(ref.current);
+  //       console.log(!ref.current.contains(e.target));
+  //     }
+  //   };
+  //   document.addEventListener("click", checkIfClickedOutside);
+  //   return () => {
+  //     document.removeEventListener("click", checkIfClickedOutside);
+  //   };
+  // }, [ref]);
+
+  // create ref for the StyledModalWrapper component
+  // const ref = useRef<any>(null);
+
+  // // check if the user has clicked inside or outside the modal
+  // // useCallback is used to store the function reference, so that on modal closure, the correct callback can be cleaned in window.removeEventListener
+  // const backDropHandler = useCallback((e: any) => {
+  //   console.log(sideBar);
+  //   console.log(!ref?.current?.contains(e.target));
+  //   if (!ref?.current?.contains(e.target)) {
+  //     // setSideBar(false);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   // We wrap it inside setTimeout in order to prevent the eventListener to be attached before the modal is open.
+  //   setTimeout(() => {
+  //     window.addEventListener("click", backDropHandler);
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   // remove the event listener when the modal is closed
+  //   return () => window.removeEventListener("click", backDropHandler);
+  // }, []);
+
+  // const ref = useRef<any>(null);
+
+  // useEffect(() => {
+  //   // only add the event listener when the dropdown is opened
+  //   if (!sideBar) return;
+  //   function handleClick(event: any) {
+  //     // setSideBar(false);
+  //     console.log(sideBar);
+  //     console.log(ref.current + " 1 ");
+  //     console.log(!ref?.current?.contains(event.target) + " 2");
+  //     if (
+  //       ref.current &&
+  //       !ref?.current?.contains(event.target) &&
+  //       sideBar
+  //     ) {
+  //       console.log("close-----");
+  //       setSideBar(false);
+  //     }
+  //   }
+  //   window.addEventListener("click", handleClick);
+  //   // clean up
+  //   return () => window.removeEventListener("click", handleClick);
+  // }, [sideBar]);
+
+  // const ref = useRef<any>(null);
+
+  // useEffect(() => {
+  //   const handleOutSideClick = (event: any) => {
+  //     if (!ref.current?.contains(event.target)) {
+  //       alert("Outside Clicked.");
+  //       console.log("Outside Clicked. ");
+  //     }
+  //   };
+
+  //   window.addEventListener("mousedown", handleOutSideClick);
+
+  //   return () => {
+  //     window.removeEventListener("mousedown", handleOutSideClick);
+  //   };
+  // }, [ref]);
 
   return (
     <div className="">
@@ -39,7 +123,9 @@ export default function RootLayout({
                   "inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600":
                     true,
                 })}
-                onClick={() => setSideBar(!sideBar)}
+                onClick={() => {
+                  setSideBar(!sideBar);
+                }}
               >
                 <span className="sr-only">Open sidebar</span>
                 <svg
@@ -80,12 +166,14 @@ export default function RootLayout({
         </div>
       </nav>
 
-      <SideBarV4
-        shown={sideBar}
-        closeSideBar={() => {
-          setSideBar(false);
-        }}
-      />
+      {sideBar && (
+        <SideBarV4
+          shown={sideBar}
+          closeSideBar={() => {
+            setSideBar(false);
+          }}
+        />
+      )}
 
       <div className="bg-white dark:bg-gray-900 h-full min-h-screen flex flex-col">
         <div className="flex-1 p-2 bg-white dark:bg-gray-900 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">

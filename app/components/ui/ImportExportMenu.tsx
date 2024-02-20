@@ -23,10 +23,10 @@ export default function ImportExportMenu({
           Import
         </Button>
       </div>
-      <Button size="xs" color="light" onClick={onClickExport}>
+      {/* <Button size="xs" color="light" onClick={onClickExport}>
         <BsFileEarmarkExcelFill />
         Export
-      </Button>
+      </Button> */}
       <Button
         size="xs"
         color="light"

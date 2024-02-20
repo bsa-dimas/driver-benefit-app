@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { GrTransaction } from "react-icons/gr";
@@ -86,6 +86,11 @@ const itmes: NavItem[] = [
         href: "/dashboard/tabungan",
         icon: <UserGroupIcon className="w-6 h-6" />,
       },
+      {
+        label: "Print",
+        href: "/dashboard/print",
+        icon: <UserGroupIcon className="w-6 h-6" />,
+      },
     ],
     icon: <FolderIcon className="w-6 h-6" />,
   },
@@ -104,9 +109,23 @@ export default function SideBarV4({ shown, closeSideBar }: any) {
     isActive: null,
   });
 
+  const ref = useRef<any>();
+  useEffect(() => {
+    const checkIfClickedOutside = (e: any) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        closeSideBar(false);
+      }
+    };
+    document.addEventListener("click", checkIfClickedOutside);
+    return () => {
+      document.removeEventListener("click", checkIfClickedOutside);
+    };
+  }, [ref, shown]);
+
   return (
     <div>
       <aside
+        ref={ref}
         id="logo-sidebar"
         className={classNames({
           "fixed  top-0 left-0 z-40 h-screen pt-16 bg-red-300 border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700":

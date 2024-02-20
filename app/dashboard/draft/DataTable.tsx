@@ -55,6 +55,8 @@ import ImportExportMenu from "@/app/components/ui/ImportExportMenu";
 import CredentialFetch from "@/app/components/lib/CredentialFetch";
 import { Periode } from "@/app/components/models/periode_model";
 import { Alert } from "flowbite-react";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -287,8 +289,8 @@ export default function DataTable() {
     setLoadingKalkulasi(true);
     postData(periode)
       .then((data) => {
-        if (data.error) {
-          setErrorBE(data.error);
+        if (data.errors) {
+          setErrorBE(data.errors);
         } else {
           handleNotif(data);
         }
@@ -334,6 +336,23 @@ export default function DataTable() {
     });
     setOptions(options);
   }, [options]);
+
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Buffer to store the generated Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+    });
+
+    saveAs(blob, "data.xlsx");
+  };
 
   return (
     table && (
@@ -392,7 +411,7 @@ export default function DataTable() {
             >
               <ul>
                 {errorBE?.map((error, index) => (
-                  <li>{errorBE[index]}</li>
+                  <li key={index}>{errorBE[index]}</li>
                 ))}
               </ul>
             </Alert>
@@ -403,7 +422,13 @@ export default function DataTable() {
             onSubmitImportFile={async () => {
               setLoading(true);
               await addImportData(file)
-                .then((data) => handleNotif(data))
+                .then((data) => {
+                  if (data.errors) {
+                    setErrorBE(data.errors);
+                  } else {
+                    handleNotif(data);
+                  }
+                })
                 .finally(() => setLoading(false));
             }}
             onChange={uploadToClient}
@@ -431,12 +456,11 @@ export default function DataTable() {
             postDraftData={postingData}
           />
 
-          <ReportDraftMenu dataPeriodeAll={dataPeriodeAll} />
-
           <StandartMenu
             onClickAdd={() => {
               setModal(true);
             }}
+            onExportExcel={exportToExcel}
             table={table}
             searchValue={globalFilter ?? ""}
             onChange={(value: any) => setGlobalFilter(String(value))}
