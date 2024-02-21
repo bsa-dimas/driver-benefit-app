@@ -1,7 +1,10 @@
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { MouseEvent } from "react";
 
 export const PrintCell = ({ row, table }: any) => {
+  const session = useSession();
+
   const meta = table.options.meta;
   const validRow = meta?.validRows[row.id];
   // console.log(row.id + " " + JSON.stringify(validRow));
@@ -33,7 +36,7 @@ export const PrintCell = ({ row, table }: any) => {
       <div className="edit-cell-action flex gap-2">
         <Link
           className="btn btn-xs"
-          href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-slip-gaji-by-nik-pdf/${row.original.id}`}
+          href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-slip-gaji-by-nik-pdf?id=${row.original.id}&key=${session.data?.key}`}
           target="_blank"
         >
           <svg

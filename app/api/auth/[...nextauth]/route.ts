@@ -96,6 +96,7 @@ const authOptions: NextAuthOptions = {
       if (user) {
         token.user = user;
         token.accessToken = user.access_token;
+        token.key = user.key;
       }
       // console.log(token);
       return token;
@@ -103,6 +104,7 @@ const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       session.accessToken = token.access_token as string;
       session.user = token.user;
+      session.key = token.key as string;
       // console.log(session);
       return session;
     },
