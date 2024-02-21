@@ -5,7 +5,7 @@ import { Button, Select } from "flowbite-react";
 export default function KalkulasiMenu({
   onChangePeriode,
   dataPeriode,
-  postDataToTransaksi,
+  kalkulasiDraftData,
   postDraftData,
   isLoadingKalkulasi,
   isLoadingPosting,
@@ -27,19 +27,19 @@ export default function KalkulasiMenu({
       <Button
         size="xs"
         color="light"
-        onClick={postDataToTransaksi}
+        onClick={kalkulasiDraftData}
         isProcessing={isLoadingKalkulasi}
       >
-        Posting Draft Data
+        Kalkulasi Draft Data
       </Button>
-      {/* <Button
+      <Button
         size="xs"
         color="light"
         onClick={postDraftData}
         isProcessing={isLoadingPosting}
       >
         Posting Draft Data
-      </Button> */}
+      </Button>
     </div>
   );
 }

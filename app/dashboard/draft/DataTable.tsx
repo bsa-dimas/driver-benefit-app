@@ -119,8 +119,7 @@ export default function DataTable() {
     postingDraftData,
   } = useDrafTransaksi();
 
-  const { data: dataPeriodeAll, dataDraftTransaksi: dataPeriode } =
-    usePeriode();
+  const { dataDraftTransaksi: dataPeriode } = usePeriode();
 
   const [options, setOptions] = useState<any>([]);
   const [rowSelection, setRowSelection] = React.useState({});
@@ -327,16 +326,6 @@ export default function DataTable() {
     setData([...originalData]);
   }, [isValidating, error, initTable, originalData]);
 
-  useEffect(() => {
-    dataPeriodeAll.map((periode: Periode, index: number) => {
-      options.push({
-        value: `${periode.id}`,
-        label: `${periode.dari_tanggal} - ${periode.sampai_tanggal}`,
-      });
-    });
-    setOptions(options);
-  }, [options]);
-
   const exportToExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
@@ -452,7 +441,7 @@ export default function DataTable() {
               setPeriode(e.target.value);
             }}
             dataPeriode={dataPeriode}
-            postDataToTransaksi={kalkulasiDataToTransaksi}
+            kalkulasiDraftData={kalkulasiDataToTransaksi}
             postDraftData={postingData}
           />
 

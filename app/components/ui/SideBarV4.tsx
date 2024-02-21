@@ -120,7 +120,7 @@ export default function SideBarV4({ shown, closeSideBar }: any) {
     return () => {
       document.removeEventListener("click", checkIfClickedOutside);
     };
-  }, [ref, shown]);
+  }, [ref, shown, closeSideBar]);
 
   return (
     <div>
