@@ -92,11 +92,17 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, account, user }) {
+    async jwt({ token, trigger, session, user }) {
+      if (trigger === "update" && session) {
+        console.log(session);
+        return { ...token, ...session };
+      }
+
       if (user) {
         token.user = user;
         token.accessToken = user.access_token;
         token.key = user.key;
+        token.isDefaultPassword = user.isDefaultPassword;
       }
       // console.log(token);
       return token;
@@ -105,6 +111,7 @@ const authOptions: NextAuthOptions = {
       session.accessToken = token.access_token as string;
       session.user = token.user;
       session.key = token.key as string;
+      session.isDefaultPassword = token.isDefaultPassword as boolean;
       // console.log(session);
       return session;
     },

@@ -19,6 +19,7 @@ declare module "@tanstack/react-table" {
     addRow: any;
     removeRow: any;
     revertData: any;
+    resetPassword?: any;
     removeSelectedRows: any;
   }
   interface FilterFns {

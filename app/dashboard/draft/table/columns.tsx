@@ -79,6 +79,7 @@ export const columns = [
     meta: {
       type: "text",
       required: true,
+      disabled: true,
       pattern: "^[a-zA-Z ]+$",
     },
   }),

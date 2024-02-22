@@ -53,6 +53,7 @@ import { NextRequest, NextResponse } from "next/server";
 export default withAuth(
   function middleware(request) {
     const session = request?.nextauth?.token;
+
     if (session && request.nextUrl.pathname === "/")
       return NextResponse.redirect(new URL("/dashboard", request.url));
 
@@ -60,6 +61,13 @@ export default withAuth(
       return NextResponse.redirect(new URL("/login", request.url));
     if (session && request.nextUrl.pathname === "/login")
       return NextResponse.redirect(new URL("/dashboard", request.url));
+
+    if (
+      session?.isDefaultPassword &&
+      request.nextUrl.pathname.startsWith("/dashboard")
+    )
+      return NextResponse.redirect(new URL("/change-password", request.url));
+
     return NextResponse.next();
   },
   {

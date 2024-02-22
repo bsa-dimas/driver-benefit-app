@@ -106,6 +106,7 @@ export default function DataTable() {
     addRow,
     updateRow,
     deleteRow,
+    resetPassword,
   } = useUser();
 
   const [rowSelection, setRowSelection] = React.useState({});
@@ -160,6 +161,9 @@ export default function DataTable() {
       setEditedRows,
       validRows,
       setValidRows,
+      resetPassword: (rowIndex: number) => {
+        resetPassword(data[rowIndex].id).then((data) => handleNotif(data));
+      },
       revertData: (rowIndex: number) => {
         setData((old) =>
           old.map((row, index) =>

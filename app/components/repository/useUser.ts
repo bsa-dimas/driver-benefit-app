@@ -14,6 +14,16 @@ async function updateRequest(id: string, data: User) {
   return response.json();
 }
 
+async function resetPasswordRequest(id: string) {
+  const response = await CredentialFetch(`/reset-password/${id}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      id: id,
+    }),
+  });
+  return response.json();
+}
+
 async function addRequest(data: User) {
   const response = await CredentialFetch(url, {
     method: "POST",
@@ -72,6 +82,12 @@ export default function useUser() {
     });
   };
 
+  const resetPassword = async (id: string) => {
+    return resetPasswordRequest(id).finally(() => {
+      mutate(url);
+    });
+  };
+
   return {
     data: data ?? [],
     isValidating,
@@ -79,5 +95,6 @@ export default function useUser() {
     addRow,
     updateRow,
     deleteRow,
+    resetPassword,
   };
 }
