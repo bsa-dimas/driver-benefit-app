@@ -67,9 +67,9 @@ export default function ReportDraftMenu() {
       <Button
         size="xs"
         color="light"
-        onClick={downloadFile}
-        // href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-departemen-pdf?by=${report}&periode_id=${periode}&key=${session.data?.key}`}
-        // target="_blank"
+        // onClick={downloadFile}
+        href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-departemen-pdf?by=${report}&periode_id=${periode}&key=${session.data?.key}`}
+        target="_blank"
       >
         <FaFilePdf />
         Pdf By Dept

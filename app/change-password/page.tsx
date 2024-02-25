@@ -45,8 +45,6 @@ export default function ChangePassword() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    console.log(session?.isDefaultPassword);
-
     setMessage(null);
     setErrors(null);
 
@@ -64,8 +62,6 @@ export default function ChangePassword() {
       handleUpdateUser();
     } else {
       const data = await res.json();
-      console.log(data);
-
       setLoading(false);
       setMessage(data.message);
       setErrors(data.errors);

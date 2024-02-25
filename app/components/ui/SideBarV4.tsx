@@ -87,6 +87,11 @@ const itmes: NavItem[] = [
         icon: <UserGroupIcon className="w-6 h-6" />,
       },
       {
+        label: "Simpanan Summary",
+        href: "/dashboard/tabungansummary",
+        icon: <UserGroupIcon className="w-6 h-6" />,
+      },
+      {
         label: "Print",
         href: "/dashboard/print",
         icon: <UserGroupIcon className="w-6 h-6" />,

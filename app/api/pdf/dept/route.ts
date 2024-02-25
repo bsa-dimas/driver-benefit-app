@@ -9,7 +9,6 @@ import CredentialFetch from "@/app/components/lib/CredentialFetch";
 export async function GET(request: Request) {
   const session = await getServerSession(authOptions);
   const token = session?.user?.access_token;
-  console.log(token);
   const fileBlob = await fetch(
     `${process.env.NEXT_PUBLIC_URL_API_DRIVER_BENEFIT}/report-draft-by-departemen-pdf?by=draft&periode_id=3`,
     {

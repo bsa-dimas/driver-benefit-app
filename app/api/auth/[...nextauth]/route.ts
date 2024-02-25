@@ -65,7 +65,6 @@ const authOptions: NextAuthOptions = {
 
           if (response.ok) {
             const res = await response.json();
-            console.log("response", res);
             return res;
           } else {
             return null;
@@ -83,9 +82,7 @@ const authOptions: NextAuthOptions = {
             // // Handle non-successful response here, return an appropriate JSON response.
             // return { error: "Authentication failed", status: response.status };
           }
-        } catch (error) {
-          console.log("Error", error);
-        }
+        } catch (error) {}
 
         return null;
       },
@@ -94,7 +91,6 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, trigger, session, user }) {
       if (trigger === "update" && session) {
-        console.log(session);
         return { ...token, ...session };
       }
 

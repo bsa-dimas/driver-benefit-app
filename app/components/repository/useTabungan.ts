@@ -31,16 +31,22 @@ async function deleteRequest(id: string) {
 
 async function getRequest() {
   const response = await CredentialFetch(url, {});
-  if (!response.ok) return undefined;
   return response.json();
 }
 
-export default function usePeriode() {
+async function getSummaryRequest() {
+  const response = await CredentialFetch("/tabungan-summary", {});
+  return response.json();
+}
+
+export default function useTabungan() {
   const { data, isValidating, error } = useSWR(url, getRequest);
 
-  // if (!data) {
-  //   redirect("/login?message=login expire");
-  // }
+  const {
+    data: dataSummary,
+    isValidating: isValidatingSummary,
+    error: errorSummary,
+  } = useSWR("/tabungan-summary", getSummaryRequest);
 
   const updateRow = async (id: string, postData: Tabungan) => {
     return updateRequest(id, postData).finally(() => {
@@ -64,6 +70,9 @@ export default function usePeriode() {
     data: data ?? [],
     isValidating,
     error,
+    dataSummary: dataSummary,
+    isValidatingSummary,
+    errorSummary,
     addRow,
     updateRow,
     deleteRow,

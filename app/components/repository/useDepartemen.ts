@@ -35,7 +35,7 @@ async function getRequest() {
   return response.json();
 }
 
-export default function usePeriode() {
+export default function useDepartemen() {
   const { data, isValidating, error } = useSWR(url, getRequest);
 
   // if (!data) {

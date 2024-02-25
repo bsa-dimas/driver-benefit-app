@@ -17,14 +17,11 @@ export default function LogoutBar() {
       },
     })
       .then((response) => {
-        console.log(response);
         if (response.ok) {
           router.push("/login");
         }
         return response.json();
       })
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error))
       .finally(() => {
         router.push("/login");
         localStorage.removeItem("jwt");

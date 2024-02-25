@@ -35,7 +35,7 @@ async function getRequest() {
   return response.json();
 }
 
-export default function useUser() {
+export default function useSopir() {
   const { data, isValidating, error } = useSWR(url, getRequest);
 
   // if (!data) {
