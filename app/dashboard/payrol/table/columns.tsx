@@ -64,7 +64,7 @@ export const columns = [
     },
   }),
   columnHelper.accessor("nik", {
-    header: "NIK",
+    header: "NIM",
     size: 300,
     cell: TableCell,
     meta: {

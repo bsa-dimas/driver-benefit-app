@@ -6,6 +6,7 @@ import usePeriode from "../repository/usePeriode";
 import { useSession } from "next-auth/react";
 import useDepartemen from "../repository/useDepartemen";
 import { Departemen } from "../models/departemen_model";
+import { BsFileEarmarkExcelFill } from "react-icons/bs";
 
 export default function ReportSummary() {
   const session = useSession();
@@ -70,7 +71,7 @@ export default function ReportSummary() {
         target="_blank"
       >
         <FaFilePdf />
-        Pdf Summary By NIK
+        Pdf Summary By NIM
       </Button>
       <Button
         size="xs"
@@ -79,7 +80,16 @@ export default function ReportSummary() {
         target="_blank"
       >
         <FaFilePdf />
-        Pdf Slip Gaji By NIK
+        Pdf Slip Gaji By NIM
+      </Button>
+      <Button
+        size="xs"
+        color="light"
+        href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-gaji-sinarmas?periode_id=${periode}&key=${session.data?.key}`}
+        target="_blank"
+      >
+        <BsFileEarmarkExcelFill />
+        Excel Bank Sinarmas
       </Button>
     </div>
   );

@@ -9,6 +9,7 @@ import usePeriode from "../repository/usePeriode";
 import { useSession } from "next-auth/react";
 import { Departemen } from "../models/departemen_model";
 import useDepartemen from "../repository/useDepartemen";
+import CredentialFetch from "../lib/CredentialFetch";
 
 export default function ReportDraftMenu() {
   const session = useSession();
@@ -29,6 +30,12 @@ export default function ReportDraftMenu() {
       id: e.target.value,
       nama_departemen: e.target[index].text,
     });
+  };
+
+  const downloadFile = async () => {
+    const data = await fetch("/api/pdf/dept");
+    const json = await data.json();
+    return console.log(json);
   };
 
   return (
@@ -60,8 +67,9 @@ export default function ReportDraftMenu() {
       <Button
         size="xs"
         color="light"
-        href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-departemen-pdf?by=${report}&periode_id=${periode}&key=${session.data?.key}`}
-        target="_blank"
+        onClick={downloadFile}
+        // href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-departemen-pdf?by=${report}&periode_id=${periode}&key=${session.data?.key}`}
+        // target="_blank"
       >
         <FaFilePdf />
         Pdf By Dept
@@ -73,7 +81,7 @@ export default function ReportDraftMenu() {
         target="_blank"
       >
         <FaFilePdf />
-        Pdf By NIK
+        Pdf By NIM
       </Button>
     </div>
   );
