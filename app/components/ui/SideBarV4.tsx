@@ -91,11 +91,6 @@ const itmes: NavItem[] = [
         href: "/dashboard/tabungansummary",
         icon: <UserGroupIcon className="w-6 h-6" />,
       },
-      {
-        label: "Print",
-        href: "/dashboard/print",
-        icon: <UserGroupIcon className="w-6 h-6" />,
-      },
     ],
     icon: <FolderIcon className="w-6 h-6" />,
   },

@@ -6,6 +6,10 @@ import { redirect } from "next/navigation";
 import { useRouter } from "next/router";
 import { NextRequest, NextResponse } from "next/server";
 
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|images|favicon.ico).*)"],
+};
+
 // Limit the middleware to paths starting with `/api/`
 // export const config = {
 //   matcher: "/api/:function*",
