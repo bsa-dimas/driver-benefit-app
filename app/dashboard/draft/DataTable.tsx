@@ -56,7 +56,7 @@ import usePeriode from "@/app/components/repository/usePeriode";
 import ImportExportMenu from "@/app/components/ui/ImportExportMenu";
 import CredentialFetch from "@/app/components/lib/CredentialFetch";
 import { Periode } from "@/app/components/models/periode_model";
-import { Alert } from "flowbite-react";
+import { Alert, Button } from "flowbite-react";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import ModalConfirmationPosting from "@/app/components/ui/ModalConfirmationPosting";
@@ -419,8 +419,6 @@ export default function DataTable() {
           closeModal={closeModal}
         />
 
-        <div className="flex flex-col mx-2 gap-2"></div>
-
         <div className="flex flex-col overflow-x-auto gap-2">
           {errorBE && errorBE?.length > 0 && (
             <Alert
@@ -437,48 +435,50 @@ export default function DataTable() {
             </Alert>
           )}
 
-          <ImportExportMenu
-            isLoading={loading}
-            onSubmitImportFile={async () => {
-              setLoading(true);
-              await addImportData(file)
-                .then((data) => {
-                  if (data.errors) {
-                    setErrorBE(data.errors);
-                  } else {
-                    handleNotif(data);
-                  }
-                })
-                .finally(() => setLoading(false));
-            }}
-            onChange={uploadToClient}
-            onClickExport={async () => {
-              const res = await CredentialFetch(
-                `${process.env.NEXT_PUBLIC_URL_API_DRIVER_BENEFIT}/export/draft-transaksi`,
-                {}
-              );
-              const blob = await res.blob();
-              const url = window.URL.createObjectURL(blob);
-              const link = document.createElement("a");
-              link.href = url;
-              link.click();
-            }}
-          />
+          <div className="flex gap-2">
+            <div className="flex flex-col gap-2">
+              <ImportExportMenu
+                isLoading={loading}
+                onSubmitImportFile={async () => {
+                  setLoading(true);
+                  await addImportData(file)
+                    .then((data) => {
+                      if (data.errors) {
+                        setErrorBE(data.errors);
+                      } else {
+                        handleNotif(data);
+                      }
+                    })
+                    .finally(() => setLoading(false));
+                }}
+                onChange={uploadToClient}
+                onClickExport={async () => {
+                  const res = await CredentialFetch(
+                    `${process.env.NEXT_PUBLIC_URL_API_DRIVER_BENEFIT}/export/draft-transaksi`,
+                    {}
+                  );
+                  const blob = await res.blob();
+                  const url = window.URL.createObjectURL(blob);
+                  const link = document.createElement("a");
+                  link.href = url;
+                  link.click();
+                }}
+              />
 
-          <KalkulasiMenu
-            isLoadingKalkulasi={loadingKalkulasi}
-            isLoadingPosting={loadingPosting}
-            onChangePeriode={(e: any) => {
-              setPeriode(e.target.value);
-            }}
-            dataPeriode={dataPeriode}
-            kalkulasiDraftData={kalkulasiDataToTransaksi}
-            postDraftData={() => {
-              setModalPosting(true);
-            }}
-          />
-
-          <ReportDraftMenu />
+              <KalkulasiMenu
+                isLoadingKalkulasi={loadingKalkulasi}
+                isLoadingPosting={loadingPosting}
+                onChangePeriode={(e: any) => {
+                  setPeriode(e.target.value);
+                }}
+                dataPeriode={dataPeriode}
+                kalkulasiDraftData={kalkulasiDataToTransaksi}
+                postDraftData={() => {
+                  setModalPosting(true);
+                }}
+              />
+            </div>
+          </div>
 
           <StandartMenu
             onClickAdd={() => {
