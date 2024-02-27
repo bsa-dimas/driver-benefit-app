@@ -64,6 +64,11 @@ const itmes: NavItem[] = [
         href: "/dashboard/departemen",
         icon: <UserGroupIcon className="w-6 h-6" />,
       },
+      {
+        label: "Setting",
+        href: "/dashboard/setting",
+        icon: <UserGroupIcon className="w-6 h-6" />,
+      },
     ],
     icon: <HomeIcon className="w-6 h-6" />,
   },

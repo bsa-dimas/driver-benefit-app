@@ -3,12 +3,12 @@ import {
   createColumnHelper,
   sortingFns,
 } from "@tanstack/react-table";
+import { Setting } from "@/app/components/models/setting_model";
 import React, { HTMLProps } from "react";
 import { compareItems } from "@tanstack/match-sorter-utils";
 import IndeterminateCheckbox from "@/app/components/ui/IndeterminateCheckbox";
 import { TableCell } from "@/app/components/ui/TableCell";
 import { EditCell } from "@/app/components/ui/EditCell";
-import { Periode } from "@/app/components/models/periode_model";
 
 const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   let dir = 0;
@@ -25,7 +25,7 @@ const fuzzySort: SortingFn<any> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
 };
 
-const columnHelper = createColumnHelper<Periode>();
+const columnHelper = createColumnHelper<Setting>();
 
 export const columns = [
   columnHelper.display({
@@ -58,11 +58,11 @@ export const columns = [
     size: 10,
     cell: TableCell,
     meta: {
-      type: "number",
       disabled: true,
+      type: "number",
     },
   }),
-  columnHelper.accessor("nama_periode", {
+  columnHelper.accessor("name", {
     header: "Name",
     size: 300,
     cell: TableCell,
@@ -72,25 +72,43 @@ export const columns = [
       pattern: "^[a-zA-Z ]+$",
     },
   }),
-  columnHelper.accessor("dari_tanggal", {
-    header: "Tanggal Mulai",
+  columnHelper.accessor("string_1", {
+    header: "string_1",
     size: 300,
     cell: TableCell,
     meta: {
       type: "text",
       required: true,
-      disabled: true,
       pattern: "^[a-zA-Z ]+$",
     },
   }),
-  columnHelper.accessor("sampai_tanggal", {
-    header: "Tanggal Akhir",
+  columnHelper.accessor("string_2", {
+    header: "string_2",
     size: 300,
     cell: TableCell,
     meta: {
       type: "text",
       required: true,
-      disabled: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("string_3", {
+    header: "string_3",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
+      pattern: "^[a-zA-Z ]+$",
+    },
+  }),
+  columnHelper.accessor("keterangan", {
+    header: "Keterangan",
+    size: 300,
+    cell: TableCell,
+    meta: {
+      type: "text",
+      required: true,
       pattern: "^[a-zA-Z ]+$",
     },
   }),
