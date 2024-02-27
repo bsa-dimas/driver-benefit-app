@@ -27,7 +27,7 @@ export default function ImportExportMenu({
         <BsFileEarmarkExcelFill />
         Export
       </Button> */}
-      <Button
+      {/* <Button
         size="xs"
         color="light"
         href={`${process.env.NEXT_PUBLIC_URL_WEB}/download-template-draft-transaksi`}
@@ -35,7 +35,7 @@ export default function ImportExportMenu({
       >
         <BsFileEarmarkExcelFill />
         Template File Import
-      </Button>
+      </Button> */}
     </div>
   );
 }

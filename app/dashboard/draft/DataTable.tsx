@@ -60,6 +60,7 @@ import { Alert, Button } from "flowbite-react";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import ModalConfirmationPosting from "@/app/components/ui/ModalConfirmationPosting";
+import BottomDraftTable from "@/app/components/ui/BottomDraftTable";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -405,7 +406,8 @@ export default function DataTable() {
             },
             {
               name: "kode_transaksi",
-              type: "text",
+              type: "select",
+              data: ["P", "U", "K", "A"],
               required: true,
             },
             {
@@ -491,7 +493,7 @@ export default function DataTable() {
             isFiturCrud={true}
           />
           <CoreDataTable table={table} />
-          <BottomTable table={table} />
+          <BottomDraftTable table={table} />
         </div>
 
         {ntCrud && <NotificationBottom {...ntCrud} />}

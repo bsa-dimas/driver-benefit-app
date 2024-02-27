@@ -46,12 +46,7 @@ export default function KalkulasiMenu({
         </div>
       </div>
       <ReportDraftMenu />
-      <Button
-        size="xs"
-        color="light"
-        onClick={postDraftData}
-        isProcessing={isLoadingPosting}
-      >
+      <Button size="xs" onClick={postDraftData} isProcessing={isLoadingPosting}>
         Posting Draft Data
       </Button>
     </div>

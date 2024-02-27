@@ -1,10 +1,13 @@
-import { Button, Modal, TextInput } from "flowbite-react";
-import React from "react";
+"use client";
+
+import { Button, Modal, Select, TextInput } from "flowbite-react";
+import React, { useState } from "react";
 
 type Field = {
   name: string;
   type: string;
   required?: boolean;
+  data?: string[];
 };
 
 const field = {};
@@ -20,6 +23,12 @@ export default function CreateForm({
   isOpen: boolean;
   closeModal: () => void;
 }) {
+  const [data, setData] = useState<string>();
+  const onChange = (e: any) => {
+    const index = e.target.selectedIndex;
+    setData(e.target.value);
+  };
+
   return (
     <div>
       <Modal show={isOpen} onClose={closeModal}>
@@ -31,6 +40,32 @@ export default function CreateForm({
               onSubmit={onSubmit}
             >
               {fields.map((field) => {
+                if (field.type == "select") {
+                  return (
+                    <Select
+                      sizing="sm"
+                      required={field.required}
+                      onChange={onChange}
+                    >
+                      <option key={0} value="">
+                        Pilih Kode Transaksi
+                      </option>
+                      <option key={1} value="U">
+                        U - Upah
+                      </option>
+                      <option key={2} value="P">
+                        P - Pendapatan Lain - Lain
+                      </option>
+                      <option key={3} value="K">
+                        K - Keluar Lain - Lain
+                      </option>
+                      <option key={4} value="A">
+                        A - Ambil Tabungan
+                      </option>
+                    </Select>
+                  );
+                }
+
                 return (
                   <TextInput
                     key={field.name}
