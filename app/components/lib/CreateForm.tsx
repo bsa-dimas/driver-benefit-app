@@ -44,6 +44,7 @@ export default function CreateForm({
                   return (
                     <Select
                       sizing="sm"
+                      key={field.name}
                       required={field.required}
                       onChange={onChange}
                     >
