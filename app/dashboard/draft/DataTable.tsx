@@ -262,7 +262,7 @@ export default function DataTable() {
 
     const newData: DrafTransaksi = {
       id: "",
-      nik: event.target.nik.value,
+      nik: event.target.nim.value,
       nama: "",
       tgl_transaksi: event.target.tgl_transaksi.value,
       kode_transaksi: event.target.kode_transaksi.value,

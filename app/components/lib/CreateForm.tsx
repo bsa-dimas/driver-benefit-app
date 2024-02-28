@@ -68,14 +68,19 @@ export default function CreateForm({
                 }
 
                 return (
-                  <TextInput
-                    key={field.name}
-                    id={field.name}
-                    name={field.name}
-                    type={field.type}
-                    placeholder={field.name}
-                    required={field.required}
-                  />
+                  <div>
+                    <div className="text-gray-900 dark:text-white">
+                      {field.name}
+                    </div>
+                    <TextInput
+                      key={field.name}
+                      id={field.name}
+                      name={field.name}
+                      type={field.type}
+                      placeholder={field.name}
+                      required={field.required}
+                    />
+                  </div>
                 );
               })}
 

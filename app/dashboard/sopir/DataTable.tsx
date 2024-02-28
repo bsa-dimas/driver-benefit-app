@@ -249,7 +249,7 @@ export default function DataTable() {
       no_sim: event.target.no_sim.value,
       no_telepon: event.target.no_telepon.value,
       dept_id: event.target.dept_id.value,
-      nik: event.target.nik.value,
+      nik: event.target.nim.value,
       email: event.target.email.value,
       no_npwp: event.target.no_npwp.value,
       status_ptkp: event.target.status_ptkp.value,
@@ -342,7 +342,7 @@ export default function DataTable() {
             },
             {
               name: "tgl_lahir",
-              type: "text",
+              type: "date",
               required: true,
             },
             {
@@ -352,33 +352,33 @@ export default function DataTable() {
             },
             {
               name: "tgl_gabung",
-              type: "text",
+              type: "date",
               required: false,
             },
             {
               name: "tgl_keluar",
-              type: "text",
+              type: "date",
               required: false,
             },
             {
               name: "bank",
               type: "text",
-              required: false,
+              required: true,
             },
             {
               name: "no_rekening",
               type: "text",
-              required: false,
+              required: true,
             },
             {
               name: "cabang_bank",
               type: "text",
-              required: false,
+              required: true,
             },
             {
               name: "alamat",
               type: "text",
-              required: false,
+              required: true,
             },
             {
               name: "no_hp",
