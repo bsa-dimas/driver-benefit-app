@@ -25,6 +25,7 @@ type NavItem = {
 type SubNavItem = {
   label: string;
   href: string;
+  target?: string;
   icon: React.ReactNode;
 };
 
@@ -67,6 +68,12 @@ const itmes: NavItem[] = [
       {
         label: "Setting",
         href: "/dashboard/setting",
+        icon: <UserGroupIcon className="w-6 h-6" />,
+      },
+      {
+        label: "Download Template Draft",
+        href: `${process.env.NEXT_PUBLIC_URL_WEB}/download-template-draft-transaksi`,
+        target: "_blank",
         icon: <UserGroupIcon className="w-6 h-6" />,
       },
     ],

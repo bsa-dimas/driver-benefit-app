@@ -30,6 +30,7 @@ export default function SubItemNav({
           >
             <Link
               href={item.href}
+              target={item.target}
               className={classNames({
                 "flex p-2 text-gray-900 transition rounded-lg hover:bg-gray-100 dark:text-white dark:hover:bg-gray-900":
                   true,

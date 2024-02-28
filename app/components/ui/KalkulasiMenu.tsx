@@ -14,7 +14,7 @@ export default function KalkulasiMenu({
   return (
     <div className="flex gap-2">
       <div className="border rounded-xl">
-        <div className="px-2 text-xs w-fit ml-5 -mt-2 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800">
+        <div className="px-2 text-xs w-fit ml-5 -mt-2 text-gray-900 dark:text-white bg-gray-50 dark:bg-slate-900">
           Kalkulasi
         </div>
         <div className="flex p-2 gap-2 ">
