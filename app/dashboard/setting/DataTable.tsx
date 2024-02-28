@@ -50,6 +50,8 @@ import SkeletonCoreTable from "@/app/components/ui/SkeletonCoreTable";
 import StandartMenu from "@/app/components/ui/StandartMenu";
 import CreateForm from "@/app/components/lib/CreateForm";
 import ModalDelete from "@/app/components/ui/ModalDelete";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -278,6 +280,23 @@ export default function DataTable() {
     setData([...originalData]);
   }, [isValidating, error, initTable, originalData]);
 
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Buffer to store the generated Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+    });
+
+    saveAs(blob, "data.xlsx");
+  };
+
   return (
     table && (
       <div className="flex flex-col p-2">
@@ -330,6 +349,7 @@ export default function DataTable() {
               setModal(true);
             }}
             table={table}
+            onExportExcel={exportToExcel}
             searchValue={globalFilter ?? ""}
             onChange={(value: any) => setGlobalFilter(String(value))}
             isFiturCrud={true}

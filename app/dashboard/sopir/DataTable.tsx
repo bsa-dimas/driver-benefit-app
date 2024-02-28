@@ -51,6 +51,8 @@ import CreateForm from "@/app/components/lib/CreateForm";
 import ModalDelete from "@/app/components/ui/ModalDelete";
 import useSopir from "@/app/components/repository/useSopir";
 import { FaLaptopHouse } from "react-icons/fa";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -296,6 +298,23 @@ export default function DataTable() {
     setData([...originalData]);
   }, [isValidating, error, initTable, originalData]);
 
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // Buffer to store the generated Excel file
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+    });
+
+    saveAs(blob, "data.xlsx");
+  };
+
   return (
     table && (
       <div className="flex flex-col p-2">
@@ -312,14 +331,29 @@ export default function DataTable() {
         <CreateForm
           fields={[
             {
+              name: "nim",
+              type: "text",
+              required: true,
+            },
+            {
               name: "nama",
               type: "text",
               required: true,
             },
             {
-              name: "tgl_gabung",
+              name: "tgl_lahir",
               type: "text",
               required: true,
+            },
+            {
+              name: "dept_id",
+              type: "number",
+              required: true,
+            },
+            {
+              name: "tgl_gabung",
+              type: "text",
+              required: false,
             },
             {
               name: "tgl_keluar",
@@ -329,22 +363,22 @@ export default function DataTable() {
             {
               name: "bank",
               type: "text",
-              required: true,
+              required: false,
             },
             {
               name: "no_rekening",
               type: "text",
-              required: true,
+              required: false,
             },
             {
               name: "cabang_bank",
               type: "text",
-              required: true,
+              required: false,
             },
             {
               name: "alamat",
               type: "text",
-              required: true,
+              required: false,
             },
             {
               name: "no_hp",
@@ -354,25 +388,15 @@ export default function DataTable() {
             {
               name: "no_ktp",
               type: "text",
-              required: true,
+              required: false,
             },
             {
               name: "no_sim",
               type: "text",
-              required: true,
+              required: false,
             },
             {
               name: "no_telepon",
-              type: "text",
-              required: false,
-            },
-            {
-              name: "dept_id",
-              type: "number",
-              required: false,
-            },
-            {
-              name: "nik",
               type: "text",
               required: false,
             },
@@ -403,6 +427,7 @@ export default function DataTable() {
               setModal(true);
             }}
             table={table}
+            onExportExcel={exportToExcel}
             searchValue={globalFilter ?? ""}
             onChange={(value: any) => setGlobalFilter(String(value))}
             isFiturCrud={true}

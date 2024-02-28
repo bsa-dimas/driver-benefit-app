@@ -395,7 +395,7 @@ export default function DataTable() {
         <CreateForm
           fields={[
             {
-              name: "nik",
+              name: "nim",
               type: "text",
               required: true,
             },
