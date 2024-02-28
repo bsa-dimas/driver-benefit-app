@@ -2,9 +2,11 @@
 import { Dropdown, Avatar } from "flowbite-react";
 import React from "react";
 import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function DropDownUserNavbar() {
   const { data: session } = useSession();
+  const router = useRouter();
   const handleLogout = async () => {
     try {
       const res = await fetch(
@@ -46,6 +48,11 @@ export default function DropDownUserNavbar() {
             {session?.user?.user?.email}
           </span>
         </Dropdown.Header>
+        <Dropdown.Item
+          onClick={() => router.push("/dashboard/change-password")}
+        >
+          Ubah Password
+        </Dropdown.Item>
         <Dropdown.Item onClick={() => handleLogout()}>Sign out</Dropdown.Item>
       </Dropdown>
     </div>
