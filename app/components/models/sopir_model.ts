@@ -16,4 +16,5 @@ export type Sopir = {
   email: string;
   no_npwp: string;
   status_ptkp: string;
+  nama_departemen?: string;
 };

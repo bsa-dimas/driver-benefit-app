@@ -1,10 +1,6 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import { NumberFormatBase, NumericFormat } from "react-number-format";
-
-type Option = {
-  label: string;
-  value: string;
-};
+import { FieldSelect } from "../lib/CreateForm";
 
 function toCurrency(numberString: any) {
   let number = parseFloat(numberString);
@@ -40,8 +36,9 @@ export const TableCell = ({ getValue, row, column, table }: any) => {
   };
 
   const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    displayValidationMessage(e);
-    setValue(e.target.value);
+    // displayValidationMessage(e);
+    console.log(e.target.selectedOptions[0].label);
+    setValue(e.target.selectedOptions[0].label);
     tableMeta?.updateData(
       row.index,
       column.id,
@@ -74,15 +71,17 @@ export const TableCell = ({ getValue, row, column, table }: any) => {
   if (tableMeta?.editedRows[row.id]) {
     return columnMeta?.type === "select" ? (
       <select
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         onChange={onSelectChange}
-        value={initialValue}
         required={columnMeta?.required}
         title={validationMessage}
+        name={`select${row.id}`}
+        value={value}
+        // defaultValue={row.original.dept_id}
       >
-        {columnMeta?.options?.map((option: Option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
+        {columnMeta?.options?.map((option: FieldSelect) => (
+          <option key={option.id} value={option.id}>
+            {option.value}
           </option>
         ))}
       </select>
@@ -102,6 +101,7 @@ export const TableCell = ({ getValue, row, column, table }: any) => {
 
     columnMeta?.type === "numeric" ? (
       <NumberFormatBase
+        name={`NumberFormatBase${row.id}`}
         className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         value={value}
         // onChange={(e) => setValue(e.target.value)}
@@ -115,6 +115,7 @@ export const TableCell = ({ getValue, row, column, table }: any) => {
       />
     ) : (
       <input
+        name={`input${row.id}`}
         className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         disabled={columnMeta?.disabled}
         value={value}

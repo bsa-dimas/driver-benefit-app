@@ -43,6 +43,7 @@ export default function useSopir() {
   // }
 
   const updateRow = async (id: string, postData: Sopir) => {
+    postData.dept_id = postData.nama_departemen!;
     return updateRequest(id, postData).finally(() => {
       mutate(url);
     });

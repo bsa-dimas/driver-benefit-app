@@ -114,6 +114,7 @@ export default function BottomTable({ table: initialTable }: { table: any }) {
       </span>
       <span className="flex items-center gap-1 text-sm">
         <input
+          name={`input`}
           type="number"
           defaultValue={initialTable.getState().pagination.pageIndex + 1}
           onChange={(e) => {
@@ -123,6 +124,7 @@ export default function BottomTable({ table: initialTable }: { table: any }) {
           className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
         <select
+          name={`selectbottom`}
           className="block w-full p-2 text-xs text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           value={initialTable.getState().pagination.pageSize}
           onChange={(e) => {

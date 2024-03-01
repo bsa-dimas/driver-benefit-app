@@ -35,7 +35,6 @@ import {
   rankItem,
   compareItems,
 } from "@tanstack/match-sorter-utils";
-import { columns } from "./table/columns";
 import { Sopir } from "@/app/components/models/sopir_model";
 import DebouncedInput from "@/app/components/ui/DebuncedInput";
 import MenuItem from "@/app/components/ui/MenuItem";
@@ -47,12 +46,18 @@ import CoreDataTable, {
 } from "@/app/components/ui/CoreDataTable";
 import SkeletonCoreTable from "@/app/components/ui/SkeletonCoreTable";
 import StandartMenu from "@/app/components/ui/StandartMenu";
-import CreateForm from "@/app/components/lib/CreateForm";
+import CreateForm, { FieldSelect } from "@/app/components/lib/CreateForm";
 import ModalDelete from "@/app/components/ui/ModalDelete";
 import useSopir from "@/app/components/repository/useSopir";
 import { FaLaptopHouse } from "react-icons/fa";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import useDepartemen from "@/app/components/repository/useDepartemen";
+import { Departemen } from "@/app/components/models/departemen_model";
+import CredentialFetch from "@/app/components/lib/CredentialFetch";
+import IndeterminateCheckbox from "@/app/components/ui/IndeterminateCheckbox";
+import { TableCell } from "@/app/components/ui/TableCell";
+import { EditCell } from "@/app/components/ui/EditCell";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -111,6 +116,8 @@ export default function DataTable() {
     deleteRow,
   } = useSopir();
 
+  const { data: dataDept } = useDepartemen();
+
   const [rowSelection, setRowSelection] = React.useState({});
   const [data, setData] = useState<Sopir[]>([]);
   const [editedRows, setEditedRows] = React.useState({});
@@ -127,12 +134,51 @@ export default function DataTable() {
   const [modal, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [rowIdForDelete, setRowIdForDelete] = useState<any>(null);
+  const [errorBE, setErrorBE] = useState<string[]>();
+  const [selectDept, setSelectDept] = useState<FieldSelect[]>([]);
+
+  const getDataDept = async () => {
+    const data = await CredentialFetch("/departemen", {});
+    if (data.ok) {
+      const json = await data.json();
+      let arr: FieldSelect[] = [];
+      json.map((departmen: Departemen, index: number) => {
+        const dept = {
+          id: departmen.id,
+          value: departmen.nama_departemen,
+        };
+        arr.push(dept);
+      });
+
+      setSelectDept(arr);
+    }
+  };
+
+  useEffect(() => {
+    getDataDept();
+  }, []);
+
   const handleNotif = (data: any) => {
-    setNtCrud({
-      title: data.message.includes("Error") ? "Error" : "Message",
-      msg: data.message,
-      type: data.message.includes("Error") ? "error" : "message",
-    });
+    if (data.errors) {
+      let errorString = "";
+      Object.keys(data.errors).forEach((key) => {
+        data.errors[key].map((err: string, index: number) => {
+          errorString += err + "\n";
+        });
+      });
+
+      setNtCrud({
+        title: "Error",
+        msg: errorString,
+        type: "error",
+      });
+    } else {
+      setNtCrud({
+        title: data.message.includes("Error") ? "Error" : "Message",
+        msg: data.message,
+        type: data.message.includes("Error") ? "error" : "message",
+      });
+    }
 
     setTimeout(() => {
       setNtCrud(null);
@@ -143,6 +189,10 @@ export default function DataTable() {
     React.useState<VisibilityState>({});
   useEffect(() => {
     setColumnVisibility({
+      id: false,
+      email: false,
+      no_npwp: false,
+      status_ptkp: false,
       alamat: false,
       no_telepon: false,
       no_hp: false,
@@ -152,6 +202,211 @@ export default function DataTable() {
       cabang_bank: false,
     });
   }, []);
+
+  const columnHelper = createColumnHelper<Sopir>();
+
+  const columns = [
+    columnHelper.display({
+      id: "check",
+      size: 5,
+      header: ({ table }) => (
+        <IndeterminateCheckbox
+          {...{
+            checked: table.getIsAllRowsSelected(),
+            indeterminate: table.getIsSomeRowsSelected(),
+            onChange: table.getToggleAllRowsSelectedHandler(),
+          }}
+        />
+      ),
+      cell: ({ row }) => (
+        <div className="">
+          <IndeterminateCheckbox
+            {...{
+              checked: row.getIsSelected(),
+              disabled: !row.getCanSelect(),
+              indeterminate: row.getIsSomeSelected(),
+              onChange: row.getToggleSelectedHandler(),
+            }}
+          />
+        </div>
+      ),
+    }),
+    columnHelper.accessor("id", {
+      header: "ID",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        disabled: true,
+        type: "number",
+      },
+    }),
+    columnHelper.accessor("nik", {
+      header: "NIM",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("nama", {
+      header: "Nama",
+      size: 500,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("tgl_gabung", {
+      header: "Tanggal Gabung",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("tgl_keluar", {
+      header: "Tanggal Keluar",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("bank", {
+      header: "Bank",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("cabang_bank", {
+      header: "Cabang Bank",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("no_rekening", {
+      header: "No. Rek",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("alamat", {
+      header: "Alamat",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("no_telepon", {
+      header: "No Tlp",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("no_hp", {
+      header: "No Hp",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("no_ktp", {
+      header: "No Ktp",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("no_sim", {
+      header: "No SIM",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("email", {
+      header: "Email",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("no_npwp", {
+      header: "No NPWP",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("status_ptkp", {
+      header: "Status PTKP",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("nama_departemen", {
+      header: "Departemen",
+      size: 10,
+      cell: TableCell,
+      meta: {
+        type: "select",
+        options: selectDept,
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.display({
+      id: "edit",
+      size: 10,
+      cell: EditCell,
+    }),
+  ];
 
   const initTable = useReactTable({
     data,
@@ -242,21 +497,36 @@ export default function DataTable() {
       tgl_keluar: event.target.tgl_keluar.value,
       bank: event.target.bank.value,
       no_rekening: event.target.no_rekening.value,
-      cabang_bank: event.target.cabang_bank.value,
+      cabang_bank: "-",
       alamat: event.target.alamat.value,
       no_hp: event.target.no_hp.value,
       no_ktp: event.target.no_ktp.value,
       no_sim: event.target.no_sim.value,
       no_telepon: event.target.no_telepon.value,
       dept_id: event.target.dept_id.value,
-      nik: event.target.nim.value,
+      nik: event.target.nik.value,
       email: event.target.email.value,
       no_npwp: event.target.no_npwp.value,
       status_ptkp: event.target.status_ptkp.value,
     };
-    addRow(newData)
-      .then((data) => handleNotif(data))
-      .finally(() => setModal(false));
+    // addRow(newData).then((data) => {
+    //   console.log(data.errors);
+    //   if (data.errors) {
+    //     console.log(data.errors);
+    //     setErrorBE(data.errors);
+    //   } else {
+    //     handleNotif(data);
+    //   }
+    // });
+    // .finally(() => setModal(false));
+
+    const data = await addRow(newData);
+    if (data.errors) {
+      setErrorBE(data.errors);
+    } else {
+      setModal(false);
+      handleNotif(data);
+    }
   };
 
   const submitFormDelete = async (id: number) => {
@@ -329,26 +599,30 @@ export default function DataTable() {
         />
 
         <CreateForm
+          errorBE={errorBE}
           fields={[
             {
-              name: "nim",
+              name: "nik",
+              label: "nim",
               type: "text",
-              required: true,
+              required: false,
             },
             {
               name: "nama",
               type: "text",
-              required: true,
+              required: false,
             },
             {
               name: "tgl_lahir",
               type: "date",
-              required: true,
+              required: false,
             },
             {
               name: "dept_id",
-              type: "number",
-              required: true,
+              type: "select",
+              dataSelect: selectDept,
+              label: "Pilih Departemen",
+              required: false,
             },
             {
               name: "tgl_gabung",
@@ -362,23 +636,20 @@ export default function DataTable() {
             },
             {
               name: "bank",
+              default: "Bank Sinarmas",
               type: "text",
-              required: true,
+              required: false,
             },
             {
               name: "no_rekening",
               type: "text",
-              required: true,
-            },
-            {
-              name: "cabang_bank",
-              type: "text",
-              required: true,
+              default: "0",
+              required: false,
             },
             {
               name: "alamat",
               type: "text",
-              required: true,
+              required: false,
             },
             {
               name: "no_hp",
@@ -416,14 +687,18 @@ export default function DataTable() {
               required: false,
             },
           ]}
-          onSubmit={submitForm}
+          onSubmit={(e) => {
+            submitForm(e);
+            // setErrorBE(["name", "error"]);
+          }}
           isOpen={modal}
           closeModal={closeModal}
         />
 
-        <div className="flex flex-col overflow-x-auto gap-2">
+        <div className="flex flex-col gap-2">
           <StandartMenu
             onClickAdd={() => {
+              setErrorBE([]);
               setModal(true);
             }}
             table={table}

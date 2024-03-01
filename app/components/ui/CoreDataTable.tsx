@@ -98,6 +98,7 @@ function Filter({
         ))}
       </datalist>
       <DebouncedInput
+        name="search"
         type="text"
         value={(columnFilterValue ?? "") as string}
         onChange={(value) => column.setFilterValue(value)}
@@ -112,8 +113,9 @@ function Filter({
 
 export default function CoreDataTable({ table: table }: { table: any }) {
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <div className="overflow-x-auto shadow-md sm:rounded-lg">
+      {/* <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"> */}
+      <table className="w-max table-fixed text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400  ">
           {table.getHeaderGroups().map((headerGroup: any) => (
             <tr key={headerGroup.id}>
@@ -123,7 +125,8 @@ export default function CoreDataTable({ table: table }: { table: any }) {
                     key={header.id}
                     colSpan={header.colSpan}
                     scope="col"
-                    className="px-6 py-3"
+                    // style={{ width: `${header.getSize()}px` }}
+                    className={`px-6 py-3 w-[${header.getSize()}px]`}
                   >
                     {header.isPlaceholder ? null : (
                       <>

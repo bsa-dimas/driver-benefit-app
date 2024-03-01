@@ -406,8 +406,9 @@ export default function DataTable() {
             },
             {
               name: "kode_transaksi",
-              type: "select",
-              data: ["P", "U", "K", "A"],
+              type: "text",
+              // type: "select",
+              // dataSelect: ["P", "U", "K", "A"],
               required: true,
             },
             {
