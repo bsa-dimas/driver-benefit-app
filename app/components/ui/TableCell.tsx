@@ -24,6 +24,8 @@ export const TableCell = ({ getValue, row, column, table }: any) => {
   useEffect(() => {
     if (columnMeta?.type === "numeric") {
       !initialValue ? setValue("") : setValue(toCurrency(initialValue));
+    } else if (columnMeta?.type === "select") {
+      !initialValue ? setValue("") : setValue(initialValue);
     } else {
       !initialValue ? setValue("") : setValue(initialValue);
     }
@@ -39,6 +41,8 @@ export const TableCell = ({ getValue, row, column, table }: any) => {
     // displayValidationMessage(e);
     console.log(e.target.selectedOptions[0].label);
     setValue(e.target.selectedOptions[0].label);
+    // setValue(e.target.value);
+
     tableMeta?.updateData(
       row.index,
       column.id,
@@ -76,11 +80,11 @@ export const TableCell = ({ getValue, row, column, table }: any) => {
         required={columnMeta?.required}
         title={validationMessage}
         name={`select${row.id}`}
+        // defaultValue={value}
         value={value}
-        // defaultValue={row.original.dept_id}
       >
         {columnMeta?.options?.map((option: FieldSelect) => (
-          <option key={option.id} value={option.id}>
+          <option key={option.id} value={option.value}>
             {option.value}
           </option>
         ))}

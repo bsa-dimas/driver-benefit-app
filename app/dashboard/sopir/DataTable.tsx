@@ -190,16 +190,18 @@ export default function DataTable() {
   useEffect(() => {
     setColumnVisibility({
       id: false,
-      email: false,
-      no_npwp: false,
-      status_ptkp: false,
-      alamat: false,
-      no_telepon: false,
-      no_hp: false,
-      no_ktp: false,
-      no_sim: false,
-      no_rekening: false,
-      cabang_bank: false,
+      // email: false,
+      // no_npwp: false,
+      // status_ptkp: false,
+      // alamat: false,
+      // no_telepon: false,
+      // no_hp: false,
+      // no_ktp: false,
+      // no_sim: false,
+      // no_rekening: false,
+      // cabang_bank: false,
+      // keterangan: false,
+      // tgl_masa_berlaku_sim: false,
     });
   }, []);
 
@@ -233,7 +235,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("id", {
       header: "ID",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         disabled: true,
@@ -242,7 +244,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("nik", {
       header: "NIM",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "text",
@@ -260,29 +262,36 @@ export default function DataTable() {
         pattern: "^[a-zA-Z ]+$",
       },
     }),
-    columnHelper.accessor("tgl_gabung", {
-      header: "Tanggal Gabung",
-      size: 10,
+    columnHelper.accessor("tgl_lahir", {
+      header: "Tanggal Lahir",
+      size: 100,
       cell: TableCell,
       meta: {
-        type: "text",
+        type: "date",
         required: true,
-        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
+    columnHelper.accessor("tgl_gabung", {
+      header: "Tanggal Gabung",
+      size: 100,
+      cell: TableCell,
+      meta: {
+        type: "date",
+        required: true,
       },
     }),
     columnHelper.accessor("tgl_keluar", {
       header: "Tanggal Keluar",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
-        type: "text",
+        type: "date",
         required: true,
-        pattern: "^[a-zA-Z ]+$",
       },
     }),
     columnHelper.accessor("bank", {
       header: "Bank",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "text",
@@ -292,7 +301,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("cabang_bank", {
       header: "Cabang Bank",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "text",
@@ -302,7 +311,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("no_rekening", {
       header: "No. Rek",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "text",
@@ -312,7 +321,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("alamat", {
       header: "Alamat",
-      size: 10,
+      size: 500,
       cell: TableCell,
       meta: {
         type: "text",
@@ -322,7 +331,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("no_telepon", {
       header: "No Tlp",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "text",
@@ -332,7 +341,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("no_hp", {
       header: "No Hp",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "text",
@@ -342,7 +351,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("no_ktp", {
       header: "No Ktp",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "text",
@@ -352,7 +361,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("no_sim", {
       header: "No SIM",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "text",
@@ -360,9 +369,18 @@ export default function DataTable() {
         pattern: "^[a-zA-Z ]+$",
       },
     }),
+    columnHelper.accessor("tgl_masa_berlaku_sim", {
+      header: "Tanggal Berlaku SIM",
+      size: 100,
+      cell: TableCell,
+      meta: {
+        type: "date",
+        required: true,
+      },
+    }),
     columnHelper.accessor("email", {
       header: "Email",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "text",
@@ -372,7 +390,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("no_npwp", {
       header: "No NPWP",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "text",
@@ -382,7 +400,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("status_ptkp", {
       header: "Status PTKP",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "text",
@@ -392,7 +410,7 @@ export default function DataTable() {
     }),
     columnHelper.accessor("nama_departemen", {
       header: "Departemen",
-      size: 10,
+      size: 100,
       cell: TableCell,
       meta: {
         type: "select",
@@ -401,9 +419,19 @@ export default function DataTable() {
         pattern: "^[a-zA-Z ]+$",
       },
     }),
+    columnHelper.accessor("keterangan", {
+      header: "Keterangan",
+      size: 500,
+      cell: TableCell,
+      meta: {
+        type: "text",
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
     columnHelper.display({
       id: "edit",
-      size: 10,
+      size: 100,
       cell: EditCell,
     }),
   ];
@@ -414,11 +442,11 @@ export default function DataTable() {
     enableRowSelection: true,
     autoResetPageIndex,
     autoResetAll: false,
-    defaultColumn: {
-      size: 100, //starting column size
-      minSize: 5, //enforced during column resizing
-      maxSize: 500, //enforced during column resizing
-    },
+    // defaultColumn: {
+    //   size: 100, //starting column size
+    //   minSize: 5, //enforced during column resizing
+    //   maxSize: 500, //enforced during column resizing
+    // },
     meta: {
       editedRows,
       setEditedRows,
@@ -508,6 +536,9 @@ export default function DataTable() {
       email: event.target.email.value,
       no_npwp: event.target.no_npwp.value,
       status_ptkp: event.target.status_ptkp.value,
+      tgl_lahir: event.target.tgl_lahir.value,
+      keterangan: event.target.keterangan.value,
+      tgl_masa_berlaku_sim: event.target.tgl_masa_berlaku_sim.value,
     };
     // addRow(newData).then((data) => {
     //   console.log(data.errors);
@@ -603,16 +634,18 @@ export default function DataTable() {
           fields={[
             {
               name: "nik",
-              label: "nim",
+              label: "NIM",
               type: "text",
               required: false,
             },
             {
+              label: "Nama",
               name: "nama",
               type: "text",
               required: false,
             },
             {
+              label: "Tanggal Lahir",
               name: "tgl_lahir",
               type: "date",
               required: false,
@@ -625,64 +658,88 @@ export default function DataTable() {
               required: false,
             },
             {
+              label: "Tanggal Gabung",
               name: "tgl_gabung",
               type: "date",
               required: false,
             },
             {
+              label: "Tanggal Keluar",
               name: "tgl_keluar",
               type: "date",
               required: false,
             },
             {
+              label: "Bank",
               name: "bank",
               default: "Bank Sinarmas",
               type: "text",
               required: false,
             },
             {
+              label: "No Rekening",
               name: "no_rekening",
               type: "text",
               default: "0",
               required: false,
             },
             {
+              label: "Alamat",
               name: "alamat",
               type: "text",
               required: false,
             },
             {
+              label: "No HP",
               name: "no_hp",
               type: "text",
               required: false,
             },
             {
+              label: "No KTP",
               name: "no_ktp",
               type: "text",
               required: false,
             },
             {
+              label: "No SIM",
               name: "no_sim",
               type: "text",
               required: false,
             },
             {
+              label: "Tanggal Berlaku SIM",
+              name: "tgl_masa_berlaku_sim",
+              type: "date",
+              required: false,
+            },
+            {
+              label: "No Telpon",
               name: "no_telepon",
               type: "text",
               required: false,
             },
             {
+              label: "Email",
               name: "email",
               type: "email",
               required: false,
             },
             {
+              label: "No NPWP",
               name: "no_npwp",
               type: "text",
               required: false,
             },
             {
+              label: "Status PTKP",
               name: "status_ptkp",
+              type: "text",
+              required: false,
+            },
+            {
+              label: "Keterangan",
+              name: "keterangan",
               type: "text",
               required: false,
             },

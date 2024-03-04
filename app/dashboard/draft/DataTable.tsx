@@ -305,7 +305,7 @@ export default function DataTable() {
 
   const kalkulasiDataToTransaksi = async () => {
     setLoadingKalkulasi(true);
-    postData(periode)
+    postData(dataPeriode[0].id)
       .then((data) => {
         if (data.errors) {
           setErrorBE(data.errors);
@@ -319,7 +319,7 @@ export default function DataTable() {
   const postingData = async () => {
     setLoadingPosting(true);
     setModalPosting(false);
-    postingDraftData(periode)
+    postingDraftData(dataPeriode[0].id)
       .then((data) => {
         if (data.errors) {
           setErrorBE(data.errors);

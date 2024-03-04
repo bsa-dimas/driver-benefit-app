@@ -49,30 +49,32 @@ export default function Dashboard() {
             <CardSkeleton />
           </div>
         ) : (
-          dataTotal.map((data: TotalDashBoard, index: number) => {
-            return (
-              <div
-                className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 m-auto"
-                key={index}
-              >
-                <CardView
-                  title={"Pendapatan Total"}
-                  value={toCurrency(data.pendapatantotal)}
-                  type={"invoices"}
-                />
-                <CardView
-                  title={"Potongan Total"}
-                  value={toCurrency(data.potongantotal)}
-                  type={"invoices"}
-                />
-                <CardView
-                  title={"Pendapatan Final"}
-                  value={toCurrency(data.pendapatanfinal)}
-                  type={"invoices"}
-                />
-              </div>
-            );
-          })
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 m-auto">
+            <CardView
+              title={"Pendapatan Total"}
+              valueBeforePeriod={toCurrency(
+                dataTotal.periodeSebelumnya.pendapatantotal
+              )}
+              value={toCurrency(dataTotal.periodeTerakhir.pendapatantotal)}
+              type={"invoices"}
+            />
+            <CardView
+              title={"Potongan Total"}
+              valueBeforePeriod={toCurrency(
+                dataTotal.periodeSebelumnya.potongantotal
+              )}
+              value={toCurrency(dataTotal.periodeTerakhir.potongantotal)}
+              type={"invoices"}
+            />
+            <CardView
+              title={"Pendapatan Final"}
+              valueBeforePeriod={toCurrency(
+                dataTotal.periodeSebelumnya.pendapatanfinal
+              )}
+              value={toCurrency(dataTotal.periodeTerakhir.pendapatanfinal)}
+              type={"invoices"}
+            />
+          </div>
         )}
 
         {/* <Suspense fallback={<CardSkeleton />}>

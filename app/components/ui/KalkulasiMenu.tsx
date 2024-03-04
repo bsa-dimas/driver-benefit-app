@@ -21,10 +21,9 @@ export default function KalkulasiMenu({
           <Select
             sizing="sm"
             name="periode"
-            required
+            disabled
             onChange={onChangePeriode}
           >
-            <option value={""}>Plih periode</option>
             {dataPeriode &&
               dataPeriode.map((periode: Periode, i: number) => {
                 return (
@@ -45,7 +44,7 @@ export default function KalkulasiMenu({
           </Button>
         </div>
       </div>
-      <ReportDraftMenu />
+      <ReportDraftMenu periodeId={dataPeriode[0].id} />
       <Button size="xs" onClick={postDraftData} isProcessing={isLoadingPosting}>
         Posting Draft Data
       </Button>

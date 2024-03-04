@@ -11,32 +11,9 @@ import { Departemen } from "../models/departemen_model";
 import useDepartemen from "../repository/useDepartemen";
 import CredentialFetch from "../lib/CredentialFetch";
 
-export default function ReportDraftMenu() {
+export default function ReportDraftMenu({ periodeId }: any) {
   const session = useSession();
-  const { dataDraftTransaksi: dataPeriode } = usePeriode();
-  const { data: dataDepartemen } = useDepartemen();
-  const [periode, setPeriode] = useState();
-  const [departemen, setDepartemen] = useState<Departemen>();
-
   const report = "draft";
-
-  const onChange = (e: any) => {
-    setPeriode(e.target.value);
-  };
-
-  const onChangeDepartemen = (e: any) => {
-    const index = e.target.selectedIndex;
-    setDepartemen({
-      id: e.target.value,
-      nama_departemen: e.target[index].text,
-    });
-  };
-
-  const downloadFile = async () => {
-    const data = await fetch("/api/pdf/dept");
-    const json = await data.json();
-    return console.log(json);
-  };
 
   return (
     <div className="flex gap-2">
@@ -46,7 +23,7 @@ export default function ReportDraftMenu() {
         </div>
 
         <div className="flex gap-2 p-2">
-          <Select sizing="sm" required onChange={onChangeDepartemen}>
+          {/* <Select sizing="sm" required onChange={onChangeDepartemen}>
             <option key={0} value="">
               Pilih Departemen
             </option>
@@ -57,8 +34,8 @@ export default function ReportDraftMenu() {
                 </option>
               );
             })}
-          </Select>
-          <Select sizing="sm" required onChange={onChange}>
+          </Select> */}
+          {/* <Select sizing="sm" required onChange={onChange}>
             <option key={0} value="">
               Pilih Periode
             </option>
@@ -69,12 +46,12 @@ export default function ReportDraftMenu() {
                 </option>
               );
             })}
-          </Select>
+          </Select> */}
           <Button
             size="xs"
             color="light"
             // onClick={downloadFile}
-            href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-departemen-pdf?by=${report}&periode_id=${periode}&key=${session.data?.key}`}
+            href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-departemen-pdf?by=${report}&periode_id=${periodeId}&key=${session.data?.key}`}
             target="_blank"
           >
             <FaFilePdf />
@@ -83,7 +60,7 @@ export default function ReportDraftMenu() {
           <Button
             size="xs"
             color="light"
-            href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-nik-pdf?by=${report}&dept_id=${departemen?.id}&dept_name=${departemen?.nama_departemen}&periode_id=${periode}&key=${session.data?.key}`}
+            href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-nik-pdf?by=${report}&dept_id=all&dept_name=all&periode_id=${periodeId}&key=${session.data?.key}`}
             target="_blank"
           >
             <FaFilePdf />

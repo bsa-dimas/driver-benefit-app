@@ -14,10 +14,12 @@ const iconMap = {
 
 export default function CardView({
   title,
+  valueBeforePeriod,
   value,
   type,
 }: {
   title: string;
+  valueBeforePeriod: number | string;
   value: number | string;
   type: "invoices" | "customers" | "pending" | "collected";
 }) {
@@ -29,9 +31,10 @@ export default function CardView({
         {Icon ? <Icon className="h-5 w-5 text-gray-900" /> : null}
         <h3 className="ml-2 text-xs font-medium">{title}</h3>
       </div>
-      <p className="dark:bg-gray-900 dark:border-gray-500 truncate rounded-xl bg-white px-4 py-8 text-center text-2xl">
-        {value}
-      </p>
+      <div className="px-4 py-8 dark:bg-gray-900 dark:border-gray-500 bg-white  truncate rounded-xl ">
+        <p className="text-center text-xs">{valueBeforePeriod}</p>
+        <p className="text-center text-2xl">{value}</p>
+      </div>
     </div>
   );
 }

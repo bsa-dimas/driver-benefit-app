@@ -115,21 +115,25 @@ export default function CoreDataTable({ table: table }: { table: any }) {
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
       {/* <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"> */}
-      <table className="w-max table-fixed text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <table className="min-w-fulltext-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400  ">
           {table.getHeaderGroups().map((headerGroup: any) => (
-            <tr key={headerGroup.id}>
+            <tr className="" key={headerGroup.id}>
               {headerGroup.headers.map((header: any) => {
                 return (
                   <th
                     key={header.id}
                     colSpan={header.colSpan}
                     scope="col"
-                    // style={{ width: `${header.getSize()}px` }}
-                    className={`px-6 py-3 w-[${header.getSize()}px]`}
+                    style={{
+                      width: `${header.getSize()}px`,
+                      minWidth: `${header.getSize()}px`,
+                    }}
+                    // w-[${header.getSize()}px] min-w-[${header.getSize()}px]
+                    className="p-2"
                   >
                     {header.isPlaceholder ? null : (
-                      <>
+                      <div className="">
                         <div
                           {...{
                             className: header.column.getCanSort()
@@ -152,7 +156,7 @@ export default function CoreDataTable({ table: table }: { table: any }) {
                             <Filter column={header.column} table={table} />
                           </div>
                         ) : null}
-                      </>
+                      </div>
                     )}
                   </th>
                 );
@@ -170,7 +174,7 @@ export default function CoreDataTable({ table: table }: { table: any }) {
                 <td
                   key={cell.id}
                   scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  className="px-6 py-4 font-medium text-xs text-gray-900 whitespace-nowrap dark:text-white"
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
