@@ -48,10 +48,6 @@ export default function usePeriode() {
     error: errorDraftTransaksi,
   } = useSWR(`${url}/getPeriodeLockFalse`, getPeriodeLockFalse);
 
-  // if (!data) {
-  //   redirect("/login?message=login expire");
-  // }
-
   const updateRow = async (id: string, postData: Periode) => {
     return updateRequest(id, postData).finally(() => {
       mutate(url);

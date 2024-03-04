@@ -11,9 +11,23 @@ import { Departemen } from "../models/departemen_model";
 import useDepartemen from "../repository/useDepartemen";
 import CredentialFetch from "../lib/CredentialFetch";
 
-export default function ReportDraftMenu({ periodeId }: any) {
+export default function ReportDraftMenu({ dataPeriode }: any) {
   const session = useSession();
   const report = "draft";
+  const [periodeId, setPeriodeId] = useState();
+
+  const getDataPeriode = () => {
+    CredentialFetch(`/getPeriodeLockFalse`, {}).then(async (data) => {
+      if (data.ok) {
+        const json = await data.json();
+        setPeriodeId(json[0].id);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getDataPeriode();
+  }, []);
 
   return (
     <div className="flex gap-2">

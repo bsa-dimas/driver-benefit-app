@@ -44,7 +44,7 @@ export default function KalkulasiMenu({
           </Button>
         </div>
       </div>
-      <ReportDraftMenu periodeId={dataPeriode[0].id} />
+      <ReportDraftMenu dataPeriode={dataPeriode} />
       <Button size="xs" onClick={postDraftData} isProcessing={isLoadingPosting}>
         Posting Draft Data
       </Button>
