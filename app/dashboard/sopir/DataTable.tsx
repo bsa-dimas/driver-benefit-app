@@ -262,6 +262,17 @@ export default function DataTable() {
         pattern: "^[a-zA-Z ]+$",
       },
     }),
+    columnHelper.accessor("nama_departemen", {
+      header: "Departemen",
+      size: 100,
+      cell: TableCell,
+      meta: {
+        type: "select",
+        options: selectDept,
+        required: true,
+        pattern: "^[a-zA-Z ]+$",
+      },
+    }),
     columnHelper.accessor("tgl_lahir", {
       header: "Tanggal Lahir",
       size: 100,
@@ -408,17 +419,6 @@ export default function DataTable() {
         pattern: "^[a-zA-Z ]+$",
       },
     }),
-    columnHelper.accessor("nama_departemen", {
-      header: "Departemen",
-      size: 100,
-      cell: TableCell,
-      meta: {
-        type: "select",
-        options: selectDept,
-        required: true,
-        pattern: "^[a-zA-Z ]+$",
-      },
-    }),
     columnHelper.accessor("keterangan", {
       header: "Keterangan",
       size: 500,
@@ -442,11 +442,11 @@ export default function DataTable() {
     enableRowSelection: true,
     autoResetPageIndex,
     autoResetAll: false,
-    // defaultColumn: {
-    //   size: 100, //starting column size
-    //   minSize: 5, //enforced during column resizing
-    //   maxSize: 500, //enforced during column resizing
-    // },
+    defaultColumn: {
+      // size: 100, //starting column size
+      minSize: 100, //enforced during column resizing
+      // maxSize: 500, //enforced during column resizing
+    },
     meta: {
       editedRows,
       setEditedRows,

@@ -332,7 +332,7 @@ export default function DataTable() {
           closeModal={closeModal}
         />
 
-        <div className="flex flex-col overflow-x-auto gap-2">
+        <div className="flex flex-col gap-2">
           <StandartMenu
             onClickAdd={() => {
               setModal(true);

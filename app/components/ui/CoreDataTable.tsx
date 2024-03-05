@@ -115,7 +115,7 @@ export default function CoreDataTable({ table: table }: { table: any }) {
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
       {/* <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"> */}
-      <table className="min-w-fulltext-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <table className="min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400  ">
           {table.getHeaderGroups().map((headerGroup: any) => (
             <tr className="" key={headerGroup.id}>
@@ -130,7 +130,7 @@ export default function CoreDataTable({ table: table }: { table: any }) {
                       minWidth: `${header.getSize()}px`,
                     }}
                     // w-[${header.getSize()}px] min-w-[${header.getSize()}px]
-                    className="p-2"
+                    className="px-6 py-1"
                   >
                     {header.isPlaceholder ? null : (
                       <div className="">
