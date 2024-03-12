@@ -45,7 +45,7 @@ export default function StandartMenu({
 
         {onExportExcel && (
           <Button size="xs" color="light" onClick={onExportExcel}>
-            Export To Excel
+            Export Ke Excel
           </Button>
         )}
 

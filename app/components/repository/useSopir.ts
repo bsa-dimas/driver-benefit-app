@@ -3,6 +3,7 @@ import { Sopir } from "../models/sopir_model";
 import { getSession } from "next-auth/react";
 import CredentialFetch from "../lib/CredentialFetch";
 import { redirect } from "next/navigation";
+import CredentialUploadFetch from "../lib/CredentialUploadFetch";
 
 const url = `/sopir`;
 
@@ -35,6 +36,17 @@ async function getRequest() {
   return response.json();
 }
 
+const importData = async (file: any) => {
+  const body = new FormData();
+  body.append("file", file);
+
+  const response = await CredentialUploadFetch(`${url}/import-excel`, {
+    method: "POST",
+    body: body,
+  });
+  return response.json();
+};
+
 export default function useSopir() {
   const { data, isValidating, error } = useSWR(url, getRequest);
 
@@ -61,6 +73,12 @@ export default function useSopir() {
     });
   };
 
+  const addImportData = async (file: any) => {
+    return importData(file).finally(() => {
+      mutate(url);
+    });
+  };
+
   return {
     data: data ?? [],
     isValidating,
@@ -68,5 +86,6 @@ export default function useSopir() {
     addRow,
     updateRow,
     deleteRow,
+    addImportData,
   };
 }

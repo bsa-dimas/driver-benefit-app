@@ -28,7 +28,7 @@ import {
   sortingFns,
   useReactTable,
 } from "@tanstack/react-table";
-import React, { HTMLProps, Suspense, useEffect, useState } from "react";
+import React, { HTMLProps, Suspense, useEffect, useRef, useState } from "react";
 
 import {
   RankingInfo,
@@ -58,6 +58,8 @@ import CredentialFetch from "@/app/components/lib/CredentialFetch";
 import IndeterminateCheckbox from "@/app/components/ui/IndeterminateCheckbox";
 import { TableCell } from "@/app/components/ui/TableCell";
 import { EditCell } from "@/app/components/ui/EditCell";
+import StandartImportMenu from "@/app/components/ui/StandartImportMenu";
+import { Alert } from "flowbite-react";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -114,6 +116,7 @@ export default function DataTable() {
     addRow,
     updateRow,
     deleteRow,
+    addImportData,
   } = useSopir();
 
   const { data: dataDept } = useDepartemen();
@@ -136,6 +139,13 @@ export default function DataTable() {
   const [rowIdForDelete, setRowIdForDelete] = useState<any>(null);
   const [errorBE, setErrorBE] = useState<string[]>();
   const [selectDept, setSelectDept] = useState<FieldSelect[]>([]);
+  const [file, setFile] = useState<any>();
+  const [loadingImportExcel, setLoadingImportExcel] = useState<any>();
+  const refImportExcel = useRef<any>();
+
+  const resetImportExcel = () => {
+    refImportExcel.current.value = "";
+  };
 
   const getDataDept = async () => {
     const data = await CredentialFetch("/departemen", {});
@@ -616,6 +626,14 @@ export default function DataTable() {
     saveAs(blob, "data.xlsx");
   };
 
+  const onChangeImportExcel = (e: any) => {
+    if (e.target.files && e.target.files[0]) {
+      const i = e.target.files[0];
+
+      setFile(i);
+    }
+  };
+
   return (
     table && (
       <div className="flex flex-col p-2">
@@ -753,6 +771,42 @@ export default function DataTable() {
         />
 
         <div className="flex flex-col gap-2">
+          {errorBE && errorBE?.length > 0 && (
+            <Alert
+              color="failure"
+              onDismiss={() => {
+                setErrorBE([]);
+              }}
+            >
+              <ul>
+                {errorBE?.map((error, index) => (
+                  <li key={index}>{errorBE[index]}</li>
+                ))}
+              </ul>
+            </Alert>
+          )}
+
+          <StandartImportMenu
+            isLoading={loadingImportExcel}
+            refImportExcel={refImportExcel}
+            onChange={onChangeImportExcel}
+            onImportExcel={async () => {
+              setLoadingImportExcel(true);
+              await addImportData(file)
+                .then((data) => {
+                  console.log(data);
+                  if (data.errors) {
+                    setErrorBE(data.errors);
+                  } else {
+                    handleNotif(data);
+                  }
+                })
+                .finally(() => {
+                  setLoadingImportExcel(false);
+                  resetImportExcel();
+                });
+            }}
+          />
           <StandartMenu
             onClickAdd={() => {
               setErrorBE([]);

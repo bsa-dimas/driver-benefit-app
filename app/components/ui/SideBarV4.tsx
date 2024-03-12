@@ -76,6 +76,12 @@ const itmes: NavItem[] = [
         target: "_blank",
         icon: <UserGroupIcon className="w-6 h-6" />,
       },
+      {
+        label: "Download Template Sopir",
+        href: `${process.env.NEXT_PUBLIC_URL_WEB}/download-template-sopir`,
+        target: "_blank",
+        icon: <UserGroupIcon className="w-6 h-6" />,
+      },
     ],
     icon: <HomeIcon className="w-6 h-6" />,
   },
