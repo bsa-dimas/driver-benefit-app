@@ -200,18 +200,23 @@ export default function DataTable() {
   useEffect(() => {
     setColumnVisibility({
       id: false,
-      // email: false,
+      bank: false,
       // no_npwp: false,
-      // status_ptkp: false,
+      status_ptkp: false,
       // alamat: false,
-      // no_telepon: false,
-      // no_hp: false,
-      // no_ktp: false,
-      // no_sim: false,
-      // no_rekening: false,
+      email: false,
+      no_npwp: false,
+      tgl_keluar: false,
+      tgl_gabung: false,
+      tgl_lahir: false,
+      no_telepon: false,
+      no_hp: false,
+      no_ktp: false,
+      no_sim: false,
+      no_rekening: false,
       // cabang_bank: false,
-      // keterangan: false,
-      // tgl_masa_berlaku_sim: false,
+      keterangan: false,
+      tgl_masa_berlaku_sim: false,
     });
   }, []);
 
@@ -320,16 +325,16 @@ export default function DataTable() {
         pattern: "^[a-zA-Z ]+$",
       },
     }),
-    columnHelper.accessor("cabang_bank", {
-      header: "Cabang Bank",
-      size: 100,
-      cell: TableCell,
-      meta: {
-        type: "text",
-        required: true,
-        pattern: "^[a-zA-Z ]+$",
-      },
-    }),
+    // columnHelper.accessor("cabang_bank", {
+    //   header: "Cabang Bank",
+    //   size: 100,
+    //   cell: TableCell,
+    //   meta: {
+    //     type: "text",
+    //     required: true,
+    //     pattern: "^[a-zA-Z ]+$",
+    //   },
+    // }),
     columnHelper.accessor("no_rekening", {
       header: "No. Rek",
       size: 100,
@@ -690,7 +695,7 @@ export default function DataTable() {
             {
               label: "Bank",
               name: "bank",
-              default: "Bank Sinarmas",
+              default: "SINARMAS",
               type: "text",
               required: false,
             },
