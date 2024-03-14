@@ -58,7 +58,7 @@ export default function ReportSummary() {
       <Button
         size="xs"
         color="light"
-        href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-departemen-pdf?by=${report}&periode_id=${periode}&key=${session.data?.key}`}
+        href={`${process.env.NEXT_PUBLIC_URL_WEB}/report-draft-by-departemen-pdf?by=${report}&dept_id=${departemen?.id}&periode_id=${periode}&key=${session.data?.key}`}
         target="_blank"
       >
         <FaFilePdf />
