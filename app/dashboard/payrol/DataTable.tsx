@@ -158,9 +158,9 @@ export default function DataTable() {
     autoResetPageIndex,
     autoResetAll: false,
     defaultColumn: {
-      size: 100, //starting column size
-      minSize: 5, //enforced during column resizing
-      maxSize: 500, //enforced during column resizing
+      // size: 100, //starting column size
+      minSize: 100, //enforced during column resizing
+      // maxSize: 500, //enforced during column resizing
     },
     meta: {
       editedRows,
@@ -326,7 +326,7 @@ export default function DataTable() {
           closeModal={closeModal}
         />
 
-        <div className="flex flex-col overflow-x-auto gap-2">
+        <div className="flex flex-col gap-2">
           <ReportSummary />
           <StandartMenu
             onClickAdd={null}

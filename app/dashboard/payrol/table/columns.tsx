@@ -65,7 +65,7 @@ export const columns = [
   }),
   columnHelper.accessor("nik", {
     header: "NIM",
-    size: 300,
+    size: 100,
     cell: TableCell,
     meta: {
       type: "text",
@@ -108,8 +108,8 @@ export const columns = [
     },
   }),
   columnHelper.accessor("dari_tanggal", {
-    header: "Dari Tgl",
-    size: 300,
+    header: "Dari Tanggal",
+    size: 100,
     cell: TableCell,
     meta: {
       type: "text",
@@ -119,8 +119,8 @@ export const columns = [
     },
   }),
   columnHelper.accessor("sampai_tanggal", {
-    header: "Smp Tgl",
-    size: 300,
+    header: "Sampai Tanggal",
+    size: 100,
     cell: TableCell,
     meta: {
       type: "text",
@@ -131,7 +131,7 @@ export const columns = [
   }),
   columnHelper.accessor("amount", {
     header: "Amount",
-    size: 300,
+    size: 200,
     cell: TableCell,
     meta: {
       type: "numeric",
@@ -142,7 +142,7 @@ export const columns = [
   }),
   columnHelper.accessor("dept_id", {
     header: "Dept Id",
-    size: 300,
+    size: 100,
     cell: TableCell,
     meta: {
       type: "text",
@@ -152,8 +152,8 @@ export const columns = [
     },
   }),
   columnHelper.accessor("nama_departemen", {
-    header: "Dept",
-    size: 300,
+    header: "Departemen",
+    size: 100,
     cell: TableCell,
     meta: {
       type: "text",
